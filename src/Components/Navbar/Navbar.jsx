@@ -7,7 +7,7 @@ export default function Navbar() {
       <div className="container">
         {/* Brand Logo */}
         <a className="navbar-brand text-primary fw-bold" href="/">
-          Car Detection 
+          Car Detection
         </a>
 
         {/* Toggle Button for Small Screens */}
@@ -27,27 +27,27 @@ export default function Navbar() {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto">
             <li className="nav-item">
-              <a className="nav-link" href="/home">
+              <p className="nav-link" >
                 Home
-              </a>
+              </p>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/products">
+              <p className="nav-link">
                 Products
-              </a>
+              </p>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/about">
+              <p className="nav-link">
                 About Us
-              </a>
+              </p>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/contact">
+              <p className="nav-link" >
                 Contact Us
-              </a>
+              </p>
             </li>
             <li className="nav-item dropdown">
-              <a
+              <p
                 className="nav-link dropdown-toggle"
                 href="#"
                 id="navbarDropdown"
@@ -56,25 +56,25 @@ export default function Navbar() {
                 aria-expanded="false"
               >
                 Services
-              </a>
+              </p>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li>
-                  <a className="dropdown-item" href="/service1">
+                  <p className="dropdown-item" >
                     Service 1
-                  </a>
+                  </p>
                 </li>
                 <li>
-                  <a className="dropdown-item" href="/service2">
+                  <p className="dropdown-item" >
                     Service 2
-                  </a>
+                  </p>
                 </li>
                 <li>
                   <hr className="dropdown-divider" />
                 </li>
                 <li>
-                  <a className="dropdown-item" href="/service3">
+                  <p className="dropdown-item" >
                     Service 3
-                  </a>
+                  </p>
                 </li>
               </ul>
             </li>

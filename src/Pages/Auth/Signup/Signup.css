@@ -1,0 +1,6 @@
+.signup-image {
+    background-image: url('../../../assets/signup.png');
+    background-size: cover;
+    background-position: center;
+    height: 100%;
+}

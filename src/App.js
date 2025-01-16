@@ -1,11 +1,12 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
-import LoginScreen from './Pages/Auth/Login/Login';
+import Navigation from './Navigation/Navigation';
+// import LoginScreen from './Pages/Auth/Login/Login';
 
 function App() {
   return (
     <div className="App">
-     <LoginScreen /> 
+      <Navigation />
     </div>
   );
 }
