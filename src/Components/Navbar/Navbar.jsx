@@ -1,16 +1,15 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './Navbar.css';
 
 export default function Navbar() {
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+    <nav className="navbar navbar-expand-lg shadow">
       <div className="container">
-        {/* Brand Logo */}
-        <a className="navbar-brand text-primary fw-bold" href="/">
+        <Link className="navbar-brand" to="/">
           Car Detection
-        </a>
-
-        {/* Toggle Button for Small Screens */}
+        </Link>
         <button
           className="navbar-toggler"
           type="button"
@@ -23,58 +22,58 @@ export default function Navbar() {
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        {/* Navbar Links */}
-        <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav ms-auto">
+        <div className="collapse navbar-collapse justify-content-center" id="navbarNav">
+          <ul className="navbar-nav text-center">
             <li className="nav-item">
-              <p className="nav-link" >
+              <Link className="nav-link" to="/">
                 Home
-              </p>
+              </Link>
             </li>
             <li className="nav-item">
-              <p className="nav-link">
+              <Link className="nav-link" to="/products">
                 Products
-              </p>
+              </Link>
             </li>
             <li className="nav-item">
-              <p className="nav-link">
+              <Link className="nav-link" to="/about">
                 About Us
-              </p>
+              </Link>
             </li>
             <li className="nav-item">
-              <p className="nav-link" >
+              <Link className="nav-link" to="/contact">
                 Contact Us
-              </p>
+              </Link>
             </li>
+
             <li className="nav-item dropdown">
-              <p
+              <Link
                 className="nav-link dropdown-toggle"
-                href="#"
+                to="#"
                 id="navbarDropdown"
                 role="button"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
                 Services
-              </p>
-              <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+              </Link>
+              <ul className="dropdown-menu">
                 <li>
-                  <p className="dropdown-item" >
+                  <Link className="dropdown-item" to="/service-1">
                     Service 1
-                  </p>
+                  </Link>
                 </li>
                 <li>
-                  <p className="dropdown-item" >
+                  <Link className="dropdown-item" to="/service-2">
                     Service 2
-                  </p>
+                  </Link>
                 </li>
                 <li>
                   <hr className="dropdown-divider" />
                 </li>
                 <li>
-                  <p className="dropdown-item" >
+                  <Link className="dropdown-item" to="/service-3">
                     Service 3
-                  </p>
+                  </Link>
                 </li>
               </ul>
             </li>

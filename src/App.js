@@ -1,7 +1,7 @@
-// import logo from './logo.svg';
 import './App.css';
 import Navigation from './Navigation/Navigation';
-// import LoginScreen from './Pages/Auth/Login/Login';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+
 
 function App() {
   return (

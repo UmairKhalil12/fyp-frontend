@@ -1,0 +1,56 @@
+.navbar {
+    background-color: var(--text-white);
+    padding: 0.85rem 1rem;
+}
+
+.navbar-brand {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: var(--primary-purple) !important;
+}
+
+.navbar-toggler {
+    border: none !important;
+    color: var(--primary-purple) !important;
+
+}
+
+.navbar-toggler-icon {
+    color: var(--primary-purple) !important;
+}
+
+.navbar-nav .nav-link {
+    color: var(--primary-purple) !important;
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 0 0.5rem;
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .dropdown-toggle:hover {
+    color: var(--text-white) !important;
+    background-color: var(--primary-purple);
+    border-radius: 5px;
+    /* border: none !important; */
+}
+
+.navbar-toggler:focus {
+    box-shadow: none;
+}
+
+.dropdown-menu {
+    background-color: var(--text-white);
+    /* border: 1px solid var(--primary-purple); */
+    border: none !important;
+}
+
+.dropdown-item {
+    color: var(--primary-purple) !important;
+    transition: background-color 0.3s ease;
+}
+
+.dropdown-item:hover {
+    background-color: var(--primary-purple);
+    color: var(--text-white) !important;
+}

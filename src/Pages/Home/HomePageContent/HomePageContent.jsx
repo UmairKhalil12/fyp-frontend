@@ -6,13 +6,10 @@ import React from 'react';
 export default function HomePageContent() {
     return (
         <div>
-            <div style={{ display: 'flex' }}>
-                <SideFilterBar />
-                <div className="home-page-content-div">
-                    <h1 style={{ textAlign: 'center' }}>Home Page</h1>
-                </div>
+            <SideFilterBar />
+            <div className="home-page-content-div">
+                <h1>Home Page</h1>
             </div>
-
         </div>
     );
 }
