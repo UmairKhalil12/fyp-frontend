@@ -1,0 +1,15 @@
+/* Container for filter bar and content */
+.filter-bar-content-div {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+
+/* Mobile view, makes the sidebar slide in from the left */
+@media (max-width: 768px) {
+    .filter-bar-content-div {
+        flex-direction: column;
+        height: 100vh;
+        /* Ensures sidebar takes full height */
+    }
+}

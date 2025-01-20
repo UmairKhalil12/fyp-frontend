@@ -1,104 +1,127 @@
-import React, { useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React, { useEffect, useState } from 'react';
 import './SideFilterBar.css';
 
-export default function SideFilterBar({ onFilter }) {
-  const [filters, setFilters] = useState({
-    color: '',
-    timestamp: '',
-    numberplate: '',
-  });
+export default function SideFilterBar({ onFilterChange, setFilters }) {
+  const [timeStamp, setTimeStamp] = useState('');
+  const [color, setColor] = useState('');
+  const [car, setCar] = useState('');
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const [isTimeStampOpen, setIsTimeStampOpen] = useState(true);
+  const [isColorOpen, setIsColorOpen] = useState(true);
+  const [isCarOpen, setIsCarOpen] = useState(true);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFilters({ ...filters, [name]: value });
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  const toggleSection = (section) => {
+    if (section === 'timestamp') {
+      setIsTimeStampOpen(!isTimeStampOpen);
+    } else if (section === 'color') {
+      setIsColorOpen(!isColorOpen);
+    } else if (section === 'car') {
+      setIsCarOpen(!isCarOpen);
+    }
   };
 
-  const handleFilter = () => {
-    onFilter(filters);
+  const applyFilters = () => {
+    onFilterChange({
+      car, color, timeStamp,
+    });
+    setSidebarOpen(false);
   };
 
-  const toggleSidebar = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const handleClose = () => {
-    setIsOpen(false);
+  const handleResetFilters = () => {
+    setColor('');
+    setTimeStamp('');
+    setCar('');
   };
 
   return (
     <>
-      {/* Button to open/close the sidebar on smaller screens */}
       <button
-        className="btn btn-primary side-filter-button d-md-none"
-        onClick={toggleSidebar}
+        className="mobile-filter-button"
+        onClick={() => setSidebarOpen(!isSidebarOpen)}
       >
         Filter
       </button>
 
-      <div className={`side-filter-bar ${isOpen ? 'open' : ''}`}>
-        {isOpen ? <div className="close-btn" onClick={handleClose}>
-          &times;
-        </div> : null}
+      <div className={isSidebarOpen ? 'filter-sidebar-open' : 'filter-sidebar'}>
+        {isSidebarOpen && (
+          <div className="close-icon-product-filter" onClick={() => setSidebarOpen(false)}>
+            &times;
+          </div>
+        )}
 
-        <h5 className="text-center mb-4">Filter Options</h5>
-
-
-        <div className="mb-3">
-          <label htmlFor="color" className="form-label">
-            Color
-          </label>
-          <input
-            type="text"
-            id="color"
-            name="color"
-            className="form-control"
-            placeholder="Enter color (e.g., red)"
-            value={filters.color}
-            onChange={handleChange}
-          />
+        <div className="filter-section">
+          <div className="filter-heading" onClick={() => toggleSection('timestamp')}>
+            Time Stamp <span className={isTimeStampOpen ? 'arrow-up' : 'arrow-down'} />
+          </div>
+          {isTimeStampOpen && (
+            <div>
+              <input
+                className='filter-side-bar-input'
+                type="datetime-local"
+                value={timeStamp}
+                onChange={(e) => setTimeStamp(e.target.value)}
+              />
+            </div>
+          )}
         </div>
 
-        {/* Filter by Timestamp */}
-        <div className="mb-3">
-          <label htmlFor="timestamp" className="form-label">
-            Timestamp
-          </label>
-          <input
-            type="datetime-local"
-            id="timestamp"
-            name="timestamp"
-            className="form-control"
-            value={filters.timestamp}
-            onChange={handleChange}
-          />
+        <div className="filter-section">
+          <div className="filter-heading" onClick={() => toggleSection('color')}>
+            Color <span className={isColorOpen ? 'arrow-up' : 'arrow-down'} />
+          </div>
+          {isColorOpen && (
+            <div>
+              <input
+                className='filter-side-bar-input'
+                type="text"
+                value={color}
+                onChange={(e) => setColor(e.target.value)}
+              />
+            </div>
+          )}
         </div>
 
-        {/* Filter by Number Plate */}
-        <div className="mb-3">
-          <label htmlFor="numberplate" className="form-label">
-            Number Plate
-          </label>
-          <input
-            type="text"
-            id="numberplate"
-            name="numberplate"
-            className="form-control"
-            placeholder="Enter number plate"
-            value={filters.numberplate}
-            onChange={handleChange}
-          />
+        <div className="filter-section">
+          <div className="filter-heading" onClick={() => toggleSection('car')}>
+            Car <span className={isCarOpen ? 'arrow-up' : 'arrow-down'} />
+          </div>
+          {isCarOpen && (
+            <div>
+              <input
+                className='filter-side-bar-input'
+                type="text"
+                value={car}
+                onChange={(e) => setCar(e.target.value)}
+              />
+            </div>
+          )}
         </div>
 
-        {/* Apply Filters Button */}
-        <button
-          className="btn btn-primary apply-filters-button mt-auto"
-          onClick={handleFilter}
-        >
-          Apply Filters
-        </button>
+        <br />
+        <div className='apply-filters-btn-div'>
+          <button
+            className="btn btn-primary apply-filters-button mt-auto"
+            onClick={applyFilters}
+          >
+            Apply Filters
+          </button>
+        </div>
+
+        <p className="reset-filters-btn" onClick={handleResetFilters}>
+          Reset Filters
+        </p>
       </div>
     </>
   );

@@ -1,24 +1,38 @@
+/* Navbar Background */
 .navbar {
     background-color: var(--text-white);
     padding: 0.85rem 1rem;
+    display: flex;
+    /* Flex layout to align logo and toggler in one line */
+    justify-content: space-between;
+    /* Distribute space between items */
+    align-items: center;
+    /* Align items vertically centered */
 }
 
+/* Navbar Brand Styling */
 .navbar-brand {
     font-size: 1.6rem;
     font-weight: bold;
     color: var(--primary-purple) !important;
+    display: flex;
+    align-items: center;
 }
 
+/* Toggler Button Styling */
 .navbar-toggler {
     border: none !important;
     color: var(--primary-purple) !important;
-
+    margin-left: auto;
+    /* Push the toggler button to the far right */
 }
 
+/* Navbar Toggler Icon Styling */
 .navbar-toggler-icon {
     color: var(--primary-purple) !important;
 }
 
+/* Navbar Link Styling */
 .navbar-nav .nav-link {
     color: var(--primary-purple) !important;
     font-size: 1.1rem;
@@ -27,21 +41,22 @@
     transition: color 0.3s ease, background-color 0.3s ease;
 }
 
+/* Hover Effects for Navbar Items */
 .navbar-nav .nav-link:hover,
 .navbar-nav .dropdown-toggle:hover {
     color: var(--text-white) !important;
     background-color: var(--primary-purple);
     border-radius: 5px;
-    /* border: none !important; */
 }
 
+/* Toggler Focus */
 .navbar-toggler:focus {
     box-shadow: none;
 }
 
+/* Dropdown Menu Styling */
 .dropdown-menu {
     background-color: var(--text-white);
-    /* border: 1px solid var(--primary-purple); */
     border: none !important;
 }
 
@@ -50,7 +65,45 @@
     transition: background-color 0.3s ease;
 }
 
+/* Hover Effects for Dropdown Items */
 .dropdown-item:hover {
     background-color: var(--primary-purple);
     color: var(--text-white) !important;
+}
+
+/* Logo Size */
+.navbar-logo {
+    width: 100px;
+    height: auto;
+}
+
+/* Media Query for Smaller Screens */
+@media (max-width: 768px) {
+
+    /* Adjust logo size for mobile */
+    .navbar-logo {
+        width: 50px;
+        height: auto;
+    }
+
+    /* Ensure navbar links stack vertically on smaller screens */
+    .navbar-collapse {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    /* Navbar links are centered and stack vertically on mobile */
+    .navbar-nav .nav-link {
+        padding: 0.5rem 0;
+        text-align: center;
+        width: 100%;
+        /* Make the links take up full width */
+    }
+
+    /* Center the toggler button */
+    .navbar-toggler {
+        margin-top: 10px;
+    }
 }

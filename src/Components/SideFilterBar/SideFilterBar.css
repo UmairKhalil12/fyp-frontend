@@ -1,74 +1,196 @@
-/* Side filter bar styles */
-.side-filter-bar {
-    position: fixed;
-    padding-top: 0.5rem;
-    top: 75px;
-    left: 0;
-    height: calc(100% - 56px);
-    width: 300px;
+.filter-sidebar {
+    display: block;
+    margin-top: 1rem;
+    min-width: 20%;
+    max-width: 20%;
+    min-height: 100%;
+    padding: 0.5rem;
+    padding-top: 3rem;
     background-color: var(--text-white);
-    color: var(--primary-purple);
-    box-shadow: none !important;
-    padding: 20px;
-    transition: transform 0.3s ease;
-    transform: translateX(-100%);
-    z-index: 1000;
+    position: sticky;
+    top: 50px;
+    color: var(--text-color);
+    font-family: var(--font-body-family);
+    border: 1px solid #777;
+    margin: 1rem;
 }
 
-.side-filter-bar.open {
+.filter-sidebar-open {
+    width: 100%;
+    height: 100%;
+    padding: 1rem;
+    background-color: var(--text-white);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    right: 0;
+    color: var(--text-color);
+    font-family: var(--font-body-family);
+    z-index: 2000;
+    transition: transform 0.3s ease-in-out;
     transform: translateX(0);
-
+    display: none;
 }
 
 
-.close-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 30px;
-    cursor: pointer;
-    color: var(--primary-purple);
-}
-
-
-@media (min-width: 768px) {
-    .side-filter-bar {
-        transform: translateX(0);
-        width: 350px;
+@media (max-width: 1024px) {
+    .filter-sidebar {
+        display: none;
     }
 
-    .side-filter-button {
+    .filter-sidebar-open {
+        width: 60%;
+    }
+
+    .mobile-filter-button {
+        display: block;
+    }
+}
+
+
+@media (max-width: 550px) {
+    .filter-sidebar-open {
+        width: 80%;
+    }
+
+    .mobile-filter-button {
+        display: block;
+    }
+
+    .filter-sidebar {
         display: none;
     }
 }
 
 
-.side-filter-button {
+@media (max-width: 350px) {
+    .filter-sidebar-open {
+        width: 90%;
+    }
+}
+
+
+.mobile-filter-button {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    z-index: 2000;
-    background-color: var(--primary-purple);
-    border-color: var(--primary-purple);
-    color: var(--text-white);
-}
-
-
-.apply-filters-button {
-    background-color: var(--primary-purple);
-    border-color: var(--primary-purple);
-    color: var(--text-white);
-
-}
-
-.apply-filters-button:hover {
+    z-index: 100;
     background-color: var(--hover-purple);
-    border-color: var(--hover-purple);
+    border: none;
+    width: 40%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    font-weight: 600;
+    font-size: 1.2em;
+    /* text-transform: uppercase; */
+    border-radius: 5px;
+    cursor: pointer;
+    color: var(--primary-purple);
+    display: none;
 }
 
 
-@media (max-width: 768px) {
-    .side-filter-bar {
-        width: 100%;
+.reset-filters-btn {
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 1.1em;
+    margin-top: 1.5rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.reset-filters-btn:hover {
+    text-decoration: underline;
+}
+
+
+.filter-section {
+    padding: 0 0.5rem;
+}
+
+.filter-heading {
+    font-size: 1.1em;
+    font-weight: 700;
+    margin-top: 1rem;
+    /* margin-bottom: 10px; */
+    color: var(--primary-purple);
+    /* padding-bottom: 5px; */
+    /* border-bottom: 1px solid var(--hover-purple); */
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* margin-bottom: 1rem; */
+}
+
+.btn {
+    background-color: var(--primary-purple);
+    color: var(--text-white);
+    border: none;
+
+}
+
+.btn:hover {
+    background-color: var(--hover-purple);
+}
+
+.apply-filters-btn-div {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+.arrow-up::after {
+    content: '^';
+    font-size: 0.8em;
+    margin-left: 5px;
+}
+
+.arrow-down::after {
+    content: 'v';
+    font-size: 0.6em;
+    margin-left: 5px;
+}
+
+
+.filter-side-bar-input {
+    width: 100%;
+    /* padding: 0.5rem; */
+    height: 30px;
+    margin-top: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+    background-color: var(--text-white);
+}
+
+
+@media (max-width: 1024px) {
+    .filter-section {
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+}
+
+.close-icon-product-filter {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
+.filter-sidebar-open {
+    display: block;
+    z-index: 2000;
+}
+
+
+
+@media (max-width: 1024px) {
+    .mobile-filter-button {
+        display: block;
     }
 }

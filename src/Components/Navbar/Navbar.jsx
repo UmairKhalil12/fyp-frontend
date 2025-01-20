@@ -2,27 +2,32 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Navbar.css';
+import Logo from "../../assets/logo.png";
 
 export default function Navbar() {
   return (
     <nav className="navbar navbar-expand-lg shadow">
-      <div className="container">
-        <Link className="navbar-brand" to="/">
-          Car Detection
-        </Link>
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
-
-        <div className="collapse navbar-collapse justify-content-center" id="navbarNav">
+      <Link className="navbar-brand d-flex align-items-center" to="/">
+        <img
+          src={Logo}
+          alt="Car Detection Logo"
+          className="navbar-logo"
+        />
+        <span className="ms-2">Car Detection</span>
+      </Link>
+      <button
+        className="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span className="navbar-toggler-icon"></span>
+      </button>
+      <div className='container' >
+        <div className="collapse navbar-collapse justify-content-center container" id="navbarNav">
           <ul className="navbar-nav text-center">
             <li className="nav-item">
               <Link className="nav-link" to="/">
@@ -44,7 +49,6 @@ export default function Navbar() {
                 Contact Us
               </Link>
             </li>
-
             <li className="nav-item dropdown">
               <Link
                 className="nav-link dropdown-toggle"
