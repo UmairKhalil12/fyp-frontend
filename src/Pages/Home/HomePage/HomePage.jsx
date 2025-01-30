@@ -12,6 +12,7 @@ export default function HomePage() {
         TimeStamp: '',
         Car: ''
     });
+    console.log(filters);
 
     const handleFilterChange = (newFilters) => {
         setFilters(newFilters);

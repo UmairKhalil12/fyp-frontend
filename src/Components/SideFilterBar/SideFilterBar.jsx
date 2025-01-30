@@ -7,6 +7,8 @@ export default function SideFilterBar({ onFilterChange, setFilters }) {
   const [car, setCar] = useState('');
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
+  console.log(windowWidth);
+
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [isTimeStampOpen, setIsTimeStampOpen] = useState(true);
   const [isColorOpen, setIsColorOpen] = useState(true);

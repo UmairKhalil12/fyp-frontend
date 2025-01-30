@@ -4,3 +4,11 @@
     background-position: center;
     height: 100%;
 }
+
+.input-error {
+    border-color: red;
+}
+
+.input-error::placeholder {
+    color: red;
+}
