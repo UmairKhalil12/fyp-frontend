@@ -28,8 +28,13 @@
     font-family: var(--font-body-family);
     z-index: 2000;
     transition: transform 0.3s ease-in-out;
-    transform: translateX(0);
+    transform: translateX(100%);
     display: none;
+}
+
+.filter-sidebar-open.active {
+    transform: translateX(0);
+    display: block;
 }
 
 
@@ -77,18 +82,21 @@
     z-index: 100;
     background-color: var(--hover-purple);
     border: none;
-    width: 40%;
+    padding: 0.5rem 1.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
     height: 50px;
     font-weight: 600;
     font-size: 1.2em;
-    /* text-transform: uppercase; */
     border-radius: 5px;
     cursor: pointer;
-    color: var(--primary-purple);
+    color: var(--text-white);
     display: none;
+}
+
+.mobile-filter-button:hover {
+    background-color: var(--hover-purple);
 }
 
 
@@ -114,15 +122,11 @@
     font-size: 1.1em;
     font-weight: 700;
     margin-top: 1rem;
-    /* margin-bottom: 10px; */
     color: var(--primary-purple);
-    /* padding-bottom: 5px; */
-    /* border-bottom: 1px solid var(--hover-purple); */
     cursor: pointer;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* margin-bottom: 1rem; */
 }
 
 .btn {
@@ -157,7 +161,6 @@
 
 .filter-side-bar-input {
     width: 100%;
-    /* padding: 0.5rem; */
     height: 30px;
     margin-top: 0.5rem;
     border: 1px solid #ccc;
@@ -170,7 +173,7 @@
 @media (max-width: 1024px) {
     .filter-section {
         padding: 1rem;
-        margin-bottom: 1rem;
+        margin-bottom: 0.5rem;
     }
 }
 

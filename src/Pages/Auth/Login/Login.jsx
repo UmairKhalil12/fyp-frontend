@@ -36,7 +36,7 @@ export default function Login() {
       setErrorPass(true);
     }
 
-    const link = `http://localhost:8000/api/login`;
+    const link = `/api/login`;
 
     const body = {
       email: email,

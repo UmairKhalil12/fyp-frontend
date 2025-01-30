@@ -70,7 +70,7 @@ export default function Signup() {
                 country: country
             }
             console.log(body);
-            const link = 'http://localhost:8000/api/signup'
+            const link = '/api/signup'
             try {
                 const signup = await SIGNUP_POST_METHOD(link, JSON.stringify(body));
                 console.log(signup, 'signup');

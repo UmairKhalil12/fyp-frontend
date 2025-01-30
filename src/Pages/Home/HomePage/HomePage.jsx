@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-// import SideFilterBar from '../../../Components/SideFilterBar/SideFilterBar';
 import Navbar from '../../../Components/Navbar/Navbar';
 import HomePageContent from '../HomePageContent/HomePageContent';
 import Footer from '../../../Components/Footer/Footer';
@@ -18,7 +17,7 @@ export default function HomePage() {
         setFilters(newFilters);
     };
     return (
-        <div>
+        <div className="main-home-page">
             <Navbar />
             <div className='filter-bar-content-div'>
                 <SideFilterBar

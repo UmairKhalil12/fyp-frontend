@@ -1,0 +1,34 @@
+.choose-file-btn {
+    background-color: var(--primary-purple);
+    color: var(--text-white);
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 0.5rem;
+    cursor: pointer;
+
+}
+
+.choose-file-btn {
+    background-color: var(--hover-purple);
+    color: var(--white);
+}
+
+.choose-file-btn:disabled {
+    background-color: var(--light-purple-disaled);
+    color: black;
+    cursor: not-allowed;
+}
+
+.detecting-btn {
+    background-color: var(--hover-purple);
+    color: var(--text-white);
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 0.5rem;
+    cursor: pointer;
+}
+
+.detecting-btn:hover {
+    background-color: var(--primary-purple);
+    color: var(--text-white);
+}

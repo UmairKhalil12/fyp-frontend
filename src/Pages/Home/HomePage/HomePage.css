@@ -1,15 +1,24 @@
-/* Container for filter bar and content */
+/* .main-home-page {
+    padding-top: 1rem;
+    padding-left: 3rem;
+    padding-right: 3rem;
+} */
+
 .filter-bar-content-div {
     display: flex;
     justify-content: space-between;
     position: relative;
+    padding-top: 1rem;
+    padding-left: 3rem;
+    padding-right: 3rem;
+
 }
 
-/* Mobile view, makes the sidebar slide in from the left */
+
 @media (max-width: 768px) {
     .filter-bar-content-div {
         flex-direction: column;
         height: 100vh;
-        /* Ensures sidebar takes full height */
+        padding: 0rem;
     }
 }

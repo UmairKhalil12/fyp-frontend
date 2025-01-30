@@ -1,10 +1,22 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Navbar.css';
 import Logo from "../../assets/logo.png";
+import { useDispatch, useSelector } from 'react-redux';
+import { userLogout } from '../../store/userSlice';
 
 export default function Navbar() {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.user);
+  const userData = useSelector((state) => state.user.userData);
+
+  const handleLogout = () => {
+    dispatch(userLogout());
+  };
+
+  const navigate = useNavigate();
+
   return (
     <nav className="navbar navbar-expand-lg shadow">
       <Link className="navbar-brand d-flex align-items-center" to="/">
@@ -26,8 +38,8 @@ export default function Navbar() {
       >
         <span className="navbar-toggler-icon"></span>
       </button>
-      <div className='container' >
-        <div className="collapse navbar-collapse justify-content-center container" id="navbarNav">
+      <div className='container'>
+        <div className="collapse navbar-collapse justify-content-center container" style={{ paddingBottom: '0.5rem' }} id="navbarNav">
           <ul className="navbar-nav text-center">
             <li className="nav-item">
               <Link className="nav-link" to="/">
@@ -35,52 +47,27 @@ export default function Navbar() {
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/products">
-                Products
-              </Link>
-            </li>
-            <li className="nav-item">
               <Link className="nav-link" to="/about">
                 About Us
               </Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/contact">
-                Contact Us
-              </Link>
-            </li>
-            <li className="nav-item dropdown">
-              <Link
-                className="nav-link dropdown-toggle"
-                to="#"
-                id="navbarDropdown"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Services
-              </Link>
-              <ul className="dropdown-menu">
-                <li>
-                  <Link className="dropdown-item" to="/service-1">
-                    Service 1
-                  </Link>
-                </li>
-                <li>
-                  <Link className="dropdown-item" to="/service-2">
-                    Service 2
-                  </Link>
-                </li>
-                <li>
-                  <hr className="dropdown-divider" />
-                </li>
-                <li>
-                  <Link className="dropdown-item" to="/service-3">
-                    Service 3
-                  </Link>
-                </li>
-              </ul>
-            </li>
+            {user && (
+              <li className='nav-item'>
+                <button className='nav-link' onClick={() => navigate('/upload')} >Upload Video</button>
+              </li>
+            )}
+            {user && (
+              <li className="nav-item user-item">
+                <span className="nav-link">{`Hello, ${userData.name || 'User'}`}</span>
+              </li>
+            )}
+            {user && (
+              <li className="nav-item user-item">
+                <button className="btn-outline-danger logout-btn" onClick={handleLogout}>
+                  Logout
+                </button>
+              </li>
+            )}
           </ul>
         </div>
       </div>

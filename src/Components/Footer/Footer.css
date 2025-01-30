@@ -1,10 +1,14 @@
-/* Footer styles */
 footer {
     background-color: var(--text-white);
     color: var(--text-color);
-    margin-top: 2rem;
-    padding: 0;
-    /* Reset padding for the footer itself */
+    padding: 1.5rem 0;
+    width: 100%;
+}
+
+.container-fluid {
+    max-width: 100%;
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 footer h5 {
@@ -27,55 +31,50 @@ footer ul li i {
 footer a {
     transition: color 0.2s;
     color: var(--text-color);
+    text-decoration: none;
 }
 
 footer a:hover {
     color: var(--hover-purple);
 }
 
+footer .row {
+    margin: 0 auto;
+    width: 100%;
+}
+
+footer .col-md-4,
+footer .col-md-2,
+footer .col-md-3 {
+    padding: 10px;
+}
+
+@media (max-width: 768px) {
+    .text-md-start {
+        text-align: center !important;
+    }
+
+    footer .row {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .col-md-4,
+    .col-md-2,
+    .col-md-3 {
+        width: 90% !important;
+        text-align: center;
+    }
+}
+
 .rights-reserved {
     background-color: var(--primary-purple);
     color: var(--text-white);
-}
-
-/* Reset container padding and width */
-footer .container {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-    width: 100% !important;
-    /* Ensure it's taking full width */
-}
-
-/* Reset row padding */
-footer .row {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-}
-
-/* Reset column padding */
-footer .col-md-4,
-footer .col-md-2,
-footer .col-md-3 {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-}
-
-/* Remove any default margins applied to columns (if any) */
-footer .col-md-4,
-footer .col-md-2,
-footer .col-md-3 {
-    margin: 0 !important;
-}
-
-/* Optional: Add margin between columns if needed (reduce gaps) */
-footer .col-md-2,
-footer .col-md-3 {
-    margin-bottom: 1rem;
-}
-
-/* Ensure content doesn't overflow horizontally */
-footer .container,
-footer .row,
-footer {
-    box-sizing: border-box;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 600;
+    width: 100%;
+    margin: 0;
+    padding: 0;
 }

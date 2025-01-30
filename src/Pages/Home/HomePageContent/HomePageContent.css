@@ -2,15 +2,16 @@
     padding: 1rem;
 }
 
-/* .home-page-content-div {
-    display: flex;
-    justify-content: center;
+.home-page-content {
     padding: 1rem;
-    width: 100%;
-} */
+}
 
 @media (max-width: 768px) {
     .main-home-page-content {
+        padding: 1rem;
+    }
+
+    .home-page-content {
         display: flex;
         justify-content: center;
     }
