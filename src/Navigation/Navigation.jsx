@@ -11,7 +11,7 @@ export default function Navigation() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path='/home' element={user ? <HomePage /> : <Navigate to="/login" />} />
+                <Route path='/home' element={!user ? <HomePage /> : <Navigate to="/login" />} />
                 <Route path='/upload' element={user ? <UploadVideoPage /> : <Navigate to='/login' />} />
                 <Route path='/' element={user ? <HomePage /> : <Navigate to="/login" />} />
                 <Route
