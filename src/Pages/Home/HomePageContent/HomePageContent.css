@@ -1,7 +1,6 @@
 .main-home-page-content {
     padding: 2rem;
     box-sizing: border-box;
-    /* Ensures padding doesn't affect layout */
 }
 
 .home-page-content {
@@ -14,14 +13,13 @@
 .car-card-div {
     display: flex;
     flex-wrap: wrap;
-    /* Allows the cards to wrap onto the next line */
-    justify-content: space-around;
-    /* Distributes cards with space between */
+    justify-content: flex-start;
+    /* Changed to align items to the left */
     gap: 20px;
     width: 100%;
     max-width: 1200px;
     box-sizing: border-box;
-    /* Ensure borders/padding don't cause issues */
+    text-align: center;
 }
 
 @media (max-width: 768px) {
@@ -36,7 +34,7 @@
     }
 
     .car-card-div {
-        justify-content: space-evenly;
-        /* Adjust to make the layout look better on smaller screens */
+        justify-content: flex-start;
+        /* Changed to align items to the left */
     }
 }

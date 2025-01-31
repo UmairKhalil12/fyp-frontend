@@ -8,11 +8,7 @@ import { GET_METHOD, GET_METHOD_2 } from '../../../api/api';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
-// /getRoutes
-// /camera/cameras
-
 export default function HomePage() {
-
     const [routeData, setRouteData] = useState([]);
     const auth = useSelector((state) => state.user.userData);
     console.log(auth, 'auth');
@@ -30,17 +26,22 @@ export default function HomePage() {
 
     useEffect(() => {
         const fetchRoutesWithFilters = async () => {
-            if (Object.values(filters).some(filter => filter !== null)) {
-                console.log(filters, 'filters');
-                const response = GET_METHOD_2("/getRoutes", auth, filters);
+            try {
+                let response;
+                if (Object.values(filters).some(filter => filter !== null)) {
+                    console.log(filters, 'filters');
+                    response = await GET_METHOD_2("/getRoutes", auth, filters);
+                    toast.success('Filter applied successfully');
+                } else {
+                    response = await GET_METHOD('/getRoutes', auth);
+                }
                 setRouteData(response);
-                toast.success('Filter applied successfully');
-            }
-            else {
-                const response = await GET_METHOD('/getRoutes', auth);
-                setRouteData(response);
+            } catch (error) {
+                console.error("Error fetching routes:", error);
+                toast.error("Failed to fetch routes");
             }
         };
+
         fetchRoutesWithFilters();
     }, [filters, auth]);
 

@@ -12,7 +12,6 @@
     z-index: 1000;
 }
 
-
 .navbar-left .logo-container {
     display: flex;
     align-items: center;
@@ -32,6 +31,7 @@
     letter-spacing: -0.5px;
 }
 
+/* Desktop Menu */
 .nav-menu {
     margin-left: 2rem;
     flex-grow: 1;
@@ -39,31 +39,41 @@
     align-items: center;
     border-bottom: none;
     background: transparent;
+    line-height: 80px;
+    /* Ensure menu items are vertically centered */
 }
 
 .nav-menu .nav-link {
-    padding: 10px 20px;
+    padding: 0 20px;
+    /* Adjusted padding */
     color: #4a4a4a;
     font-size: 1rem;
     font-weight: 500;
-    transition: color 0.3s, border-bottom 0.3s;
+    transition: color 0.3s;
     border-bottom: 2px solid transparent;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    /* Ensure full height */
 }
 
 .nav-link a {
     text-decoration: none;
+    color: inherit;
 }
 
 .nav-menu .nav-link:hover {
-    border-bottom: 2px solid transparent;
     color: var(--primary-purple);
-    /* border-bottom: 2px solid var(--primary-purple); */
+    border-bottom: 2px solid transparent;
+    /* border-bottom: 15px solid var(--primary-purple); */
 }
 
+/* Right Side (User Info and Logout) - Desktop */
 .navbar-right {
     display: flex;
     align-items: center;
     gap: 16px;
+    margin-right: 1rem;
 }
 
 .user-avatar {
@@ -108,16 +118,14 @@
     color: #4a4a4a;
     font-size: 1rem;
     font-weight: 500;
-    padding: 0px 24px;
+    padding: 12px 24px;
     display: block;
-    transition: color 0.3s, border-bottom 0.3s;
-    border-bottom: 2px solid transparent;
+    transition: color 0.3s;
 }
 
 .mobile-nav-menu .nav-link:hover {
     color: var(--primary-purple);
-    border-bottom: 2px solid var(--primary-purple);
-    padding-bottom: 10px;
+    background-color: rgba(0, 0, 0, 0.05);
 }
 
 /* Mobile responsiveness */

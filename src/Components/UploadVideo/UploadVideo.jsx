@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./UploadVideo.css";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 export default function UploadVideo() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -37,6 +38,7 @@ export default function UploadVideo() {
     console.log("Selected File is", selectedFile);
     toast.success("detecting...");
   };
+
 
   const handleUpload = async () => {
     if (!selectedFile) return;
@@ -87,7 +89,7 @@ export default function UploadVideo() {
                 Remove Video
               </button>
 
-              <button className="detecting-btn btn-primary mt-3" onClick={handleDetection}>
+              <button className="detecting-btn btn-primary mt-3" onClick={handleUpload}>
                 Start Detecting
               </button>
             </div>
