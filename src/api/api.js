@@ -1,4 +1,5 @@
 import axios from 'axios';
+import queryString from "query-string";
 // import { userLogin, userInfo } from '../store/userSlice';
 // import { toast } from 'react-toastify';
 
@@ -64,22 +65,25 @@ export const GET_METHOD = async (link, authToken) => {
     }
 };
 
-export const GET_METHOD_2 = async (link, authToken, body) => {
-    var url = `${Url}${link}`;
-    console.log(body, 'get method 2 body');
-    console.log(authToken, 'get method 2 auth');
+export const GET_METHOD_2 = async (link, authToken, params) => {
     try {
+        const queryParams = queryString.stringify(params, { skipNull: true, skipEmptyString: true });
+        const url = `${Url}${link}${queryParams ? `?${queryParams}` : ''}`;
+        console.log(url, "GET_METHOD_2 URL");
+        console.log(authToken, "GET_METHOD_2 Auth");
+
         const res = await axios.get(url, {
             headers: {
-                'Authorization': `Bearer ${authToken}`,
-                'Content-Type': 'application/json',
+                "Authorization": `Bearer ${authToken}`,
+                "Content-Type": "application/json",
             },
-            data: body
         });
-        console.log(res, 'res get api get method 2');
+
+        console.log(res, "Response from GET_METHOD_2");
         return res.data;
     } catch (error) {
-        console.log("Error fetching:", error.message);
+        console.error("Error fetching:", error.message);
+        return null;
     }
 };
 

@@ -32,7 +32,7 @@ export default function HomePage() {
         const fetchRoutesWithFilters = async () => {
             if (Object.values(filters).some(filter => filter !== null)) {
                 console.log(filters, 'filters');
-                const response = await GET_METHOD_2('/getRoutes', auth, JSON.stringify(filters));
+                const response = GET_METHOD_2("/getRoutes", auth, filters);
                 setRouteData(response);
                 toast.success('Filter applied successfully');
             }
@@ -42,7 +42,7 @@ export default function HomePage() {
             }
         };
         fetchRoutesWithFilters();
-    }, [filters, auth]);  // Depend on both filters and auth for conditional fetching
+    }, [filters, auth]);
 
     return (
         <div className="main-home-page">
