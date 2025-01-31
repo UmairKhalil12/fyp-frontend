@@ -4,6 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     user: false,
     userData: [],
+    usersInfo: []
 }
 
 export const userSlice = createSlice({
@@ -20,11 +21,15 @@ export const userSlice = createSlice({
             state.userData = [];
         },
 
-        userInfo: (state, action) => {
+        userData: (state, action) => {
             state.userData = action.payload;
+        },
+
+        userInfo: (state, action) => {
+            state.usersInfo = action.payload;
         },
     }
 })
 
-export const { userLogin, userLogout, userInfo } = userSlice.actions;
+export const { userLogin, userLogout, userInfo, userData } = userSlice.actions;
 export default userSlice.reducer

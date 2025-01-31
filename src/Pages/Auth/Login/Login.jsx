@@ -3,7 +3,7 @@ import { Form, Input, Button, Checkbox, Typography, message } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { userLogin, userInfo } from '../../../store/userSlice';
+import { userLogin, userData } from '../../../store/userSlice';
 import { LOGIN_POST_METHOD } from '../../../api/api';
 import './Login.css'; // Custom CSS for additional styling
 
@@ -29,7 +29,7 @@ export default function Login() {
       } else if (login.status === 200 || login.status === 201) {
         message.success('Logged in successfully');
         dispatch(userLogin(true));
-        dispatch(userInfo(login.data));
+        dispatch(userData(login.data));
         navigate('/home');
       }
     } catch (error) {

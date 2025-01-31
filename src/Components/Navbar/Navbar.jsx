@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Layout, Menu, Button, Avatar, Typography, Drawer } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { HomeOutlined, InfoCircleOutlined, UserOutlined, MenuOutlined, LogoutOutlined } from '@ant-design/icons';
@@ -6,6 +6,8 @@ import Logo from "../../assets/logo.png";
 import './Navbar.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { userLogout } from "../../store/userSlice";
+import { GET_METHOD } from '../../api/api';
+import { userInfo } from '../../store/userSlice';
 
 const { Header } = Layout;
 const { Text } = Typography;
@@ -16,6 +18,11 @@ export default function Navbar() {
   const userData = useSelector((state) => state.user.userData);
   const navigate = useNavigate();
   const [drawerVisible, setDrawerVisible] = useState(false);
+  // const dispatch = useDispatch();
+
+  const [usersInfo, setUsersInfo] = useState('');
+
+  const auth = useSelector((state) => state.user.userData)
 
   const handleLogout = () => {
     dispatch(userLogout());
@@ -25,6 +32,17 @@ export default function Navbar() {
   const toggleDrawer = () => {
     setDrawerVisible(!drawerVisible);
   };
+
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      const response = await GET_METHOD('/auth/me', userData);
+      setUsersInfo(response);
+      dispatch(userInfo(usersInfo));
+    }
+    fetchUserInfo();
+  }, [userData])
+
+  console.log(usersInfo, 'userInfo');
 
   return (
     <Header className="navbar">
@@ -51,7 +69,7 @@ export default function Navbar() {
       {/* Right Side (User Info and Logout) - Desktop */}
       <div className="navbar-right">
         <Avatar icon={<UserOutlined />} className="user-avatar" />
-        <Text>{userData.name}</Text>
+        <Text>{usersInfo.userName}</Text>
         <Button type="primary" className="login-btn" onClick={handleLogout}>Logout</Button>
       </div>
 
@@ -68,6 +86,7 @@ export default function Navbar() {
         visible={drawerVisible}
         width={250}
         bodyStyle={{ padding: '0' }}
+        className='mobile-drawer'
       >
         <Menu mode="vertical" className="mobile-nav-menu">
           <Menu.Item key="home" icon={<HomeOutlined />} className="nav-link">
@@ -80,7 +99,7 @@ export default function Navbar() {
             <Link to="/upload" onClick={toggleDrawer}>Upload Video</Link>
           </Menu.Item>
           <Menu.Item key="profile" icon={<UserOutlined />} className="nav-link">
-            <Link to="/profile" onClick={toggleDrawer}>Profile</Link>
+            <Link onClick={toggleDrawer}>{usersInfo.userName}</Link>
           </Menu.Item>
           <Menu.Item key="logout" icon={<LogoutOutlined />} className="nav-link" onClick={handleLogout}>
             Logout
