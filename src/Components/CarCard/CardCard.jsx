@@ -9,6 +9,8 @@ export default function CarCard({ carData, routeId }) {
     const navigate = useNavigate();
     const handleCardClick = () => {
         navigate(`/car/${routeId}`);
+        window.location.reload();
+
     };
 
     return (
