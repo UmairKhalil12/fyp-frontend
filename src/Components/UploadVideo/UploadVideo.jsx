@@ -136,6 +136,7 @@ export default function UploadVideo() {
   const [selectedCamera, setSelectedCamera] = useState("");
   const userData = useSelector((state) => state.user.userData);
   const [cameras, setCameras] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchCameras = async () => {
@@ -180,12 +181,14 @@ export default function UploadVideo() {
   };
 
   const handleUpload = async () => {
-    if (!selectedFile) return;
+    if (!selectedFile || !selectedCamera) return;
 
     const formData = new FormData();
     formData.append("video", selectedFile);
+    formData.append("cameraId", selectedCamera);
 
     try {
+      setLoading(true);
       const response = await axios.post("http://localhost:3001/upload", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -194,6 +197,9 @@ export default function UploadVideo() {
       console.log("Upload successful:", response.data);
     } catch (error) {
       console.error("Upload failed:", error);
+    } finally {
+      setLoading(false);
+      toast.success("Video Detected!");
     }
   };
 
@@ -224,7 +230,7 @@ export default function UploadVideo() {
               <Button type="danger" size="large" onClick={handleRemoveVideo}>
                 Remove Video
               </Button>
-              <Button type="primary" size="large" onClick={handleUpload}>
+              <Button type="primary" size="large" onClick={handleUpload} loading={loading}>
                 Start Detecting
               </Button>
             </div>
