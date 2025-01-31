@@ -20,7 +20,7 @@ export default function HomePageContent() {
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate culpa tempora eius doloremque maxime omnis necessitatibus hic laudantium, fugit quae aspernatur laboriosam, libero ea ipsam unde! Vitae pariatur deleniti iusto.</p>
                 </div>
             </div>
-            <Map source={KU_Maskan_Gate} destination={UBIT} />
+            {/* <Map source={KU_Maskan_Gate} destination={UBIT} /> */}
         </div>
     );
 }

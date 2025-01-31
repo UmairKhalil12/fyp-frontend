@@ -1,76 +1,92 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Layout, Menu, Button, Avatar, Typography, Drawer } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './Navbar.css';
+import { HomeOutlined, InfoCircleOutlined, UserOutlined, MenuOutlined, LogoutOutlined } from '@ant-design/icons';
 import Logo from "../../assets/logo.png";
+import './Navbar.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { userLogout } from '../../store/userSlice';
+import { userLogout } from "../../store/userSlice";
+
+const { Header } = Layout;
+const { Text } = Typography;
 
 export default function Navbar() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
   const userData = useSelector((state) => state.user.userData);
+  const navigate = useNavigate();
+  const [drawerVisible, setDrawerVisible] = useState(false);
 
   const handleLogout = () => {
     dispatch(userLogout());
+    navigate('/');
   };
 
-  const navigate = useNavigate();
+  const toggleDrawer = () => {
+    setDrawerVisible(!drawerVisible);
+  };
 
   return (
-    <nav className="navbar navbar-expand-lg shadow">
-      <Link className="navbar-brand d-flex align-items-center" to="/">
-        <img
-          src={Logo}
-          alt="Car Detection Logo"
-          className="navbar-logo"
-        />
-        <span className="ms-2">Car Detection</span>
-      </Link>
-      <button
-        className="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarNav"
-        aria-controls="navbarNav"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span className="navbar-toggler-icon"></span>
-      </button>
-      <div className='container'>
-        <div className="collapse navbar-collapse justify-content-center container" style={{ paddingBottom: '0.5rem' }} id="navbarNav">
-          <ul className="navbar-nav text-center">
-            <li className="nav-item">
-              <Link className="nav-link" to="/">
-                Home
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/about">
-                About Us
-              </Link>
-            </li>
-            {user && (
-              <li className='nav-item'>
-                <button className='nav-link' onClick={() => navigate('/upload')} >Upload Video</button>
-              </li>
-            )}
-            {user && (
-              <li className="nav-item user-item">
-                <span className="nav-link">{`Hello, ${userData.name || 'User'}`}</span>
-              </li>
-            )}
-            {user && (
-              <li className="nav-item user-item">
-                <button className="btn-outline-danger logout-btn" onClick={handleLogout}>
-                  Logout
-                </button>
-              </li>
-            )}
-          </ul>
-        </div>
+    <Header className="navbar">
+      <div className="navbar-left">
+        <Link to="/" className="logo-container">
+          <img src={Logo} alt="Car Detection Logo" className="navbar-logo" />
+          <span className="brand-name">Car Detection</span>
+        </Link>
       </div>
-    </nav>
+
+      {/* Desktop Menu */}
+      <Menu mode="horizontal" className="nav-menu">
+        <Menu.Item key="home" icon={<HomeOutlined />} className="nav-link">
+          <Link to="/">Home</Link>
+        </Menu.Item>
+        <Menu.Item key="about" icon={<InfoCircleOutlined />} className="nav-link">
+          <Link to="/about">About Us</Link>
+        </Menu.Item>
+        <Menu.Item key="upload" icon={<LogoutOutlined />} className="nav-link">
+          <Link to="/upload">Upload Video</Link>
+        </Menu.Item>
+      </Menu>
+
+      {/* Right Side (User Info and Logout) - Desktop */}
+      <div className="navbar-right">
+        <Avatar icon={<UserOutlined />} className="user-avatar" />
+        <Text>{userData.name}</Text>
+        <Button type="primary" className="login-btn" onClick={handleLogout}>Logout</Button>
+      </div>
+
+      {/* Mobile Hamburger Icon */}
+      <div className="mobile-menu-icon" onClick={toggleDrawer}>
+        <MenuOutlined style={{ fontSize: '24px', color: '#4a4a4a' }} />
+      </div>
+
+      {/* Mobile Drawer */}
+      <Drawer
+        title="Menu"
+        placement="right"
+        onClose={toggleDrawer}
+        visible={drawerVisible}
+        width={250}
+        bodyStyle={{ padding: '0' }}
+      >
+        <Menu mode="vertical" className="mobile-nav-menu">
+          <Menu.Item key="home" icon={<HomeOutlined />} className="nav-link">
+            <Link to="/" onClick={toggleDrawer}>Home</Link>
+          </Menu.Item>
+          <Menu.Item key="about" icon={<InfoCircleOutlined />} className="nav-link">
+            <Link to="/about" onClick={toggleDrawer}>About Us</Link>
+          </Menu.Item>
+          <Menu.Item key="upload" icon={<LogoutOutlined />} className="nav-link">
+            <Link to="/upload" onClick={toggleDrawer}>Upload Video</Link>
+          </Menu.Item>
+          <Menu.Item key="profile" icon={<UserOutlined />} className="nav-link">
+            <Link to="/profile" onClick={toggleDrawer}>Profile</Link>
+          </Menu.Item>
+          <Menu.Item key="logout" icon={<LogoutOutlined />} className="nav-link" onClick={handleLogout}>
+            Logout
+          </Menu.Item>
+        </Menu>
+      </Drawer>
+    </Header>
   );
 }

@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import './SideFilterBar.css';
+import { Drawer, Button, Input, Collapse, Typography } from 'antd';
+import { FilterOutlined, CloseOutlined } from '@ant-design/icons';
+import './SideFilterBar.css'; // Optional for additional custom styles
+
+const { Panel } = Collapse;
+const { Text } = Typography;
 
 export default function SideFilterBar({ onFilterChange, setFilters }) {
   const [timeStamp, setTimeStamp] = useState('');
@@ -7,9 +12,6 @@ export default function SideFilterBar({ onFilterChange, setFilters }) {
   const [car, setCar] = useState('');
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
-  const [isTimeStampOpen, setIsTimeStampOpen] = useState(true);
-  const [isColorOpen, setIsColorOpen] = useState(true);
-  const [isCarOpen, setIsCarOpen] = useState(true);
 
   useEffect(() => {
     const handleResize = () => {
@@ -21,20 +23,8 @@ export default function SideFilterBar({ onFilterChange, setFilters }) {
     };
   }, []);
 
-  const toggleSection = (section) => {
-    if (section === 'timestamp') {
-      setIsTimeStampOpen(!isTimeStampOpen);
-    } else if (section === 'color') {
-      setIsColorOpen(!isColorOpen);
-    } else if (section === 'car') {
-      setIsCarOpen(!isCarOpen);
-    }
-  };
-
   const applyFilters = () => {
-    onFilterChange({
-      car, color, timeStamp,
-    });
+    onFilterChange({ car, color, timeStamp });
     setSidebarOpen(false);
   };
 
@@ -44,84 +34,107 @@ export default function SideFilterBar({ onFilterChange, setFilters }) {
     setCar('');
   };
 
+  const filterContent = (
+    <>
+      <Collapse defaultActiveKey={['timestamp', 'color', 'car']} ghost>
+        <Panel header="Time Stamp" key="timestamp">
+          <Input
+            className='input-side-bar'
+            type="datetime-local"
+            value={timeStamp}
+            onChange={(e) => setTimeStamp(e.target.value)}
+            style={{ width: '100%', minWidth: '200px' }}
+          />
+        </Panel>
+        <Panel header="Color" key="color">
+          <Input
+            className='input-side-bar'
+            type="text"
+            value={color}
+            onChange={(e) => setColor(e.target.value)}
+            placeholder="Enter color"
+            style={{ width: '100%', minWidth: '200px' }}
+          />
+        </Panel>
+        <Panel header="Car" key="car">
+          <Input
+            className='input-side-bar'
+            type="text"
+            value={car}
+            onChange={(e) => setCar(e.target.value)}
+            placeholder="Enter car"
+            style={{ width: '100%', minWidth: '200px' }}
+          />
+        </Panel>
+      </Collapse>
+
+      <div style={{ marginTop: '1rem', textAlign: 'center' }}>
+        <Button type="primary" className='apply-filters' onClick={applyFilters} style={{ width: '100%' }}>
+          Apply Filters
+        </Button>
+        <Text
+          className='reset-filter'
+          style={{
+            display: 'block',
+            marginTop: '1rem',
+            color: 'var(--primary-purple)',
+            cursor: 'pointer',
+          }}
+          onClick={handleResetFilters}
+        >
+          Reset Filters
+        </Text>
+      </div>
+    </>
+  );
+
   return (
     <>
-      <button
-        className="mobile-filter-button"
-        onClick={() => setSidebarOpen(!isSidebarOpen)}
+      {/* Mobile Filter Button */}
+      {windowWidth <= 1024 && (
+        <Button
+          type="primary"
+          className='mobile-filter-button'
+          icon={<FilterOutlined />}
+          onClick={() => setSidebarOpen(true)}
+          style={{
+            position: 'fixed',
+            bottom: '20px',
+            right: '20px',
+            zIndex: 1000,
+          }}
+        >
+          Filter
+        </Button>
+      )}
+
+      {/* Desktop Sidebar */}
+      {windowWidth > 1024 && (
+        <div
+          style={{
+            width: '20%',
+            padding: '1rem',
+            backgroundColor: '#fff',
+            border: '1px solid #f0f0f0',
+            borderRadius: '8px',
+            margin: '1rem',
+          }}
+        >
+          {filterContent}
+        </div>
+      )}
+
+      {/* Mobile Drawer */}
+      <Drawer
+        title="Filters"
+        placement="right"
+        onClose={() => setSidebarOpen(false)}
+        visible={isSidebarOpen}
+        width={windowWidth <= 550 ? '80%' : '60%'}
+        closeIcon={<CloseOutlined />}
       >
-        Filter
-      </button>
-
-      <div className={windowWidth > 1024 ? "filter-sidebar" : `filter-sidebar-open ${isSidebarOpen ? "active" : ""}`}>
-        {isSidebarOpen && (
-          <div className="close-icon-product-filter" onClick={() => setSidebarOpen(false)}>
-            &times;
-          </div>
-        )}
-
-        <div className="filter-section">
-          <div className="filter-heading" onClick={() => toggleSection('timestamp')}>
-            Time Stamp <span className={isTimeStampOpen ? 'arrow-up' : 'arrow-down'} />
-          </div>
-          {isTimeStampOpen && (
-            <div>
-              <input
-                className='filter-side-bar-input'
-                type="datetime-local"
-                value={timeStamp}
-                onChange={(e) => setTimeStamp(e.target.value)}
-              />
-            </div>
-          )}
-        </div>
-
-        <div className="filter-section">
-          <div className="filter-heading" onClick={() => toggleSection('color')}>
-            Color <span className={isColorOpen ? 'arrow-up' : 'arrow-down'} />
-          </div>
-          {isColorOpen && (
-            <div>
-              <input
-                className='filter-side-bar-input'
-                type="text"
-                value={color}
-                onChange={(e) => setColor(e.target.value)}
-              />
-            </div>
-          )}
-        </div>
-
-        <div className="filter-section">
-          <div className="filter-heading" onClick={() => toggleSection('car')}>
-            Car <span className={isCarOpen ? 'arrow-up' : 'arrow-down'} />
-          </div>
-          {isCarOpen && (
-            <div>
-              <input
-                className='filter-side-bar-input'
-                type="text"
-                value={car}
-                onChange={(e) => setCar(e.target.value)}
-              />
-            </div>
-          )}
-        </div>
-
-        <br />
-        <div className='apply-filters-btn-div'>
-          <button
-            className="btn btn-primary apply-filters-button mt-auto"
-            onClick={applyFilters}
-          >
-            Apply Filters
-          </button>
-        </div>
-
-        <p className="reset-filters-btn" onClick={handleResetFilters}>
-          Reset Filters
-        </p>
-      </div>
+        {filterContent}
+      </Drawer>
     </>
   );
 }
