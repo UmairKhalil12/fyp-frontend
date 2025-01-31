@@ -4,7 +4,7 @@ import { POST_METHOD } from '../../api/api';
 import { useSelector } from 'react-redux';
 import Map from "../Map/Map"; // Make sure the path is correct
 
-const { Title, Text } = Typography;
+const { Title } = Typography;
 const { Item } = Descriptions;
 
 export default function SingleCarPageContent({ routeId }) {

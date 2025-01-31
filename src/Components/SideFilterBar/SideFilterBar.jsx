@@ -7,9 +7,10 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 export default function SideFilterBar({ onFilterChange, setFilters }) {
-  const [timeStamp, setTimeStamp] = useState('');
-  const [color, setColor] = useState('');
-  const [car, setCar] = useState('');
+  const [timeStamp, setTimeStamp] = useState(null);
+  const [color, setColor] = useState(null);
+  const [model, setModel] = useState(null);
+  const [numberPlate, setNumberPlate] = useState(null);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
@@ -24,19 +25,20 @@ export default function SideFilterBar({ onFilterChange, setFilters }) {
   }, []);
 
   const applyFilters = () => {
-    onFilterChange({ car, color, timeStamp });
+    onFilterChange({ model, color, timeStamp, numberPlate });
     setSidebarOpen(false);
   };
 
   const handleResetFilters = () => {
-    setColor('');
-    setTimeStamp('');
-    setCar('');
+    setColor(null);
+    setTimeStamp(null);
+    setModel(null);
+    setNumberPlate(null);
   };
 
   const filterContent = (
     <>
-      <Collapse defaultActiveKey={['timestamp', 'color', 'car']} ghost>
+      <Collapse defaultActiveKey={['timestamp', 'color', 'model', 'numberplate']} ghost>
         <Panel header="Time Stamp" key="timestamp">
           <Input
             className='input-side-bar'
@@ -56,13 +58,24 @@ export default function SideFilterBar({ onFilterChange, setFilters }) {
             style={{ width: '100%', minWidth: '200px' }}
           />
         </Panel>
-        <Panel header="Car" key="car">
+        <Panel header="Car" key="model">
           <Input
             className='input-side-bar'
             type="text"
-            value={car}
-            onChange={(e) => setCar(e.target.value)}
+            value={model}
+            onChange={(e) => setModel(e.target.value)}
             placeholder="Enter car"
+            style={{ width: '100%', minWidth: '200px' }}
+          />
+        </Panel>
+
+        <Panel header="Number plate" key="numberplate">
+          <Input
+            className='input-side-bar'
+            type="text"
+            value={numberPlate}
+            onChange={(e) => setNumberPlate(e.target.value)}
+            placeholder="Enter number plate"
             style={{ width: '100%', minWidth: '200px' }}
           />
         </Panel>

@@ -64,6 +64,25 @@ export const GET_METHOD = async (link, authToken) => {
     }
 };
 
+export const GET_METHOD_2 = async (link, authToken, body) => {
+    var url = `${Url}${link}`;
+    console.log(body, 'get method 2 body');
+    console.log(authToken, 'get method 2 auth');
+    try {
+        const res = await axios.get(url, {
+            headers: {
+                'Authorization': `Bearer ${authToken}`,
+                'Content-Type': 'application/json',
+            },
+            data: body
+        });
+        console.log(res, 'res get api get method 2');
+        return res.data;
+    } catch (error) {
+        console.log("Error fetching:", error.message);
+    }
+};
+
 
 export const POST_METHOD = async (link, authToken, body) => {
     var url = `${Url}${link}`;
