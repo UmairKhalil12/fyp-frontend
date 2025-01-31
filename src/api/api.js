@@ -65,6 +65,22 @@ export const GET_METHOD = async (link, authToken) => {
     }
 };
 
+export const GET_CAMERAS_METHOD = async (link, authToken) => {
+    var url = `${Url}${link}`;
+    try {
+        const res = await axios.get(url, {
+            headers: {
+                'Authorization': `Bearer ${authToken}`,
+                'Content-Type': 'application/json',
+            }
+        });
+        console.log(res, 'res get api');
+        return res.data;
+    } catch (error) {
+        console.log("Error fetching:", error.message);
+    }
+};
+
 export const GET_METHOD_2 = async (link, authToken, params) => {
     try {
         const queryParams = queryString.stringify(params, { skipNull: true, skipEmptyString: true });

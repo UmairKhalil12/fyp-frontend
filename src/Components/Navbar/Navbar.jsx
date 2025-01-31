@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { Layout, Menu, Button, Avatar, Typography, Drawer } from 'antd';
-import { Link, useNavigate } from 'react-router-dom';
-import { HomeOutlined, InfoCircleOutlined, UserOutlined, MenuOutlined, LogoutOutlined } from '@ant-design/icons';
+import React, { useEffect, useState } from "react";
+import { Layout, Menu, Button, Avatar, Typography, Drawer } from "antd";
+import { Link, useNavigate } from "react-router-dom";
+import { HomeOutlined, InfoCircleOutlined, UserOutlined, MenuOutlined, LogoutOutlined } from "@ant-design/icons";
 import Logo from "../../assets/logo.png";
-import './Navbar.css';
-import { useDispatch, useSelector } from 'react-redux';
+import "./Navbar.css";
+import { useDispatch, useSelector } from "react-redux";
 import { userLogout } from "../../store/userSlice";
-import { GET_METHOD } from '../../api/api';
-import { userInfo } from '../../store/userSlice';
+import { GET_METHOD } from "../../api/api";
+import { userInfo } from "../../store/userSlice";
 
 const { Header } = Layout;
 const { Text } = Typography;
@@ -20,13 +20,13 @@ export default function Navbar() {
   const [drawerVisible, setDrawerVisible] = useState(false);
   // const dispatch = useDispatch();
 
-  const [usersInfo, setUsersInfo] = useState('');
+  const [usersInfo, setUsersInfo] = useState("");
 
-  const auth = useSelector((state) => state.user.userData)
+  const auth = useSelector((state) => state.user.userData);
 
   const handleLogout = () => {
     dispatch(userLogout());
-    navigate('/');
+    navigate("/");
   };
 
   const toggleDrawer = () => {
@@ -35,14 +35,12 @@ export default function Navbar() {
 
   useEffect(() => {
     const fetchUserInfo = async () => {
-      const response = await GET_METHOD('/auth/me', userData);
+      const response = await GET_METHOD("/auth/me", userData);
       setUsersInfo(response);
       dispatch(userInfo(usersInfo));
-    }
+    };
     fetchUserInfo();
-  }, [userData])
-
-  console.log(usersInfo, 'userInfo');
+  }, [userData]);
 
   return (
     <Header className="navbar">
@@ -70,33 +68,33 @@ export default function Navbar() {
       <div className="navbar-right">
         <Avatar icon={<UserOutlined />} className="user-avatar" />
         <Text>{usersInfo.userName}</Text>
-        <Button type="primary" className="login-btn" onClick={handleLogout}>Logout</Button>
+        <Button type="primary" className="login-btn" onClick={handleLogout}>
+          Logout
+        </Button>
       </div>
 
       {/* Mobile Hamburger Icon */}
       <div className="mobile-menu-icon" onClick={toggleDrawer}>
-        <MenuOutlined style={{ fontSize: '24px', color: '#4a4a4a', marginRight: '1rem' }} />
+        <MenuOutlined style={{ fontSize: "24px", color: "#4a4a4a", marginRight: "1rem" }} />
       </div>
 
       {/* Mobile Drawer */}
-      <Drawer
-        title="Menu"
-        placement="right"
-        onClose={toggleDrawer}
-        visible={drawerVisible}
-        width={250}
-        bodyStyle={{ padding: '0' }}
-        className='mobile-drawer'
-      >
+      <Drawer title="Menu" placement="right" onClose={toggleDrawer} visible={drawerVisible} width={250} bodyStyle={{ padding: "0" }} className="mobile-drawer">
         <Menu mode="vertical" className="mobile-nav-menu">
           <Menu.Item key="home" icon={<HomeOutlined />} className="nav-link">
-            <Link to="/" onClick={toggleDrawer}>Home</Link>
+            <Link to="/" onClick={toggleDrawer}>
+              Home
+            </Link>
           </Menu.Item>
           <Menu.Item key="about" icon={<InfoCircleOutlined />} className="nav-link">
-            <Link to="/about" onClick={toggleDrawer}>About Us</Link>
+            <Link to="/about" onClick={toggleDrawer}>
+              About Us
+            </Link>
           </Menu.Item>
           <Menu.Item key="upload" icon={<LogoutOutlined />} className="nav-link">
-            <Link to="/upload" onClick={toggleDrawer}>Upload Video</Link>
+            <Link to="/upload" onClick={toggleDrawer}>
+              Upload Video
+            </Link>
           </Menu.Item>
           <Menu.Item key="profile" icon={<UserOutlined />} className="nav-link">
             <Link onClick={toggleDrawer}>{usersInfo.userName}</Link>
