@@ -8,10 +8,7 @@ const containerStyle = {
 
 const center = { lat: 24.939047604647794, lng: 67.12364596507129 };
 
-export default function Map({ source, destination }) {
-    //silver jubilee 24.93113178494496, 67.1182679245936
-    //maskan gate 24.94982820228756, 67.1127637670557
-    // ubit 24.9456433105776, 67.11540781292426
+export default function Map({ waypoints }) {
     const [directions, setDirections] = useState(null);
     const [loading, setLoading] = useState(false);
 
@@ -25,21 +22,27 @@ export default function Map({ source, destination }) {
         try {
             const directionsService = new window.google.maps.DirectionsService();
 
+            const waypointsForRequest = waypoints.slice(1, -1).map(waypoint => ({
+                location: waypoint,
+                stopover: true, // Important: Makes the waypoint a stop
+            }));
+
+            const request = {
+                origin: waypoints[0], // First element is the origin
+                destination: waypoints[waypoints.length - 1], // Last element is the destination
+                travelMode: window.google.maps.TravelMode.WALKING,
+                waypoints: waypointsForRequest, // Array of waypoints
+            };
+
+
             const result = await new Promise((resolve, reject) => {
-                directionsService.route(
-                    {
-                        origin: source,
-                        destination: destination,
-                        travelMode: window.google.maps.TravelMode.WALKING,
-                    },
-                    (result, status) => {
-                        if (status === window.google.maps.DirectionsStatus.OK) {
-                            resolve(result);
-                        } else {
-                            reject(`Error fetching directions: ${status}`);
-                        }
+                directionsService.route(request, (result, status) => {
+                    if (status === window.google.maps.DirectionsStatus.OK) {
+                        resolve(result);
+                    } else {
+                        reject(`Error fetching directions: ${status}`);
                     }
-                );
+                });
             });
 
             setDirections(result);
@@ -48,16 +51,16 @@ export default function Map({ source, destination }) {
         } finally {
             setLoading(false);
         }
-    }, [destination, source]);
+    }, [waypoints]);
 
     useEffect(() => {
         if (window.google && window.google.maps) {
             fetchRoute();
         }
-    }, [source, destination, fetchRoute]);
+    }, [waypoints, fetchRoute]);
 
     return (
-        <LoadScript googleMapsApiKey="AIzaSyD_rQ3WNwKvl35K1iUz7oM1Gkmt__ydiU8" onLoad={fetchRoute}>
+        <LoadScript googleMapsApiKey="AIzaSyD_rQ3WNwKvl35K1iUz7oM1Gkmt__ydiU8" onLoad={fetchRoute}> {/* Replace with your API key */}
             {loading ? (
                 <p>Loading maps...</p>
             ) : (

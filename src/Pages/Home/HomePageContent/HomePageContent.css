@@ -1,5 +1,7 @@
 .main-home-page-content {
     padding: 2rem;
+    box-sizing: border-box;
+    /* Ensures padding doesn't affect layout */
 }
 
 .home-page-content {
@@ -10,16 +12,16 @@
 }
 
 .car-card-div {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    /* Automatically fill the row with cards */
+    display: flex;
+    flex-wrap: wrap;
+    /* Allows the cards to wrap onto the next line */
+    justify-content: space-around;
+    /* Distributes cards with space between */
     gap: 20px;
-    /* Space between cards */
-    justify-items: center;
-    /* Center each card in its grid cell */
     width: 100%;
     max-width: 1200px;
-    /* You can adjust the max-width based on your needs */
+    box-sizing: border-box;
+    /* Ensure borders/padding don't cause issues */
 }
 
 @media (max-width: 768px) {
@@ -34,6 +36,7 @@
     }
 
     .car-card-div {
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        justify-content: space-evenly;
+        /* Adjust to make the layout look better on smaller screens */
     }
 }

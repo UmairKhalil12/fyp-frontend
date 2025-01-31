@@ -1,74 +1,84 @@
 import React, { useEffect, useState } from 'react';
-import { Typography, Tag } from 'antd';
+import { Typography, Tag, Descriptions } from 'antd';
 import { POST_METHOD } from '../../api/api';
 import { useSelector } from 'react-redux';
-import Map from "../Map/Map";
+import Map from "../Map/Map"; // Make sure the path is correct
 
 const { Title, Text } = Typography;
+const { Item } = Descriptions;
 
 export default function SingleCarPageContent({ routeId }) {
     const [routeData, setRouteData] = useState([]);
+    const [loadingRoute, setLoadingRoute] = useState(true); // Add loading state
     const auth = useSelector((state) => state.user.userData);
     const body = { routeId: parseInt(routeId) };
 
     useEffect(() => {
         const fetchCompleteRoutes = async () => {
-            const res = await POST_METHOD('/getRouteById', auth, JSON.stringify(body));
-            setRouteData(res);
+            try {
+                const res = await POST_METHOD('/getRouteById', auth, JSON.stringify(body));
+                setRouteData(res);
+            } catch (error) {
+                console.error("Error fetching route data:", error);
+            } finally {
+                setLoadingRoute(false);
+            }
         };
-        fetchCompleteRoutes();
+
+        if (routeId) {
+            fetchCompleteRoutes();
+        } else {
+            setLoadingRoute(false); // Handle no routeId case
+        }
     }, [auth, routeId]);
 
-    // Extracting useful data
     const entryTime = routeData.length > 0 ? new Date(routeData[0]?.createdAt).toLocaleString() : "";
     const exitTime = routeData.length > 0 ? new Date(routeData[routeData.length - 1]?.createdAt).toLocaleString() : "";
     const routeStatus = routeData.length > 0 ? routeData[routeData.length - 1]?.routeStatus : "";
     const carData = routeData.length > 0 ? routeData[0]?.Car : {};
 
-    // Extracting coordinates for map
-    const source = routeData.length > 0 ? {
-        lat: routeData[0]?.Camera?.lat,
-        lng: routeData[0]?.Camera?.lng
-    } : null;
-    const destination = routeData.length > 0 ? {
-        lat: routeData[routeData.length - 1]?.Camera?.lat,
-        lng: routeData[routeData.length - 1]?.Camera?.lng
-    } : null;
-
-    console.log(routeData, 'routeData single car page content')
+    const waypoints = routeData.map(route => ({
+        lat: route?.Camera?.lat,
+        lng: route?.Camera?.lng
+    })).filter(point => point && point.lat && point.lng); // Filter invalid points
 
     return (
         <div style={{ padding: '40px', maxWidth: '1000px', margin: '0 auto' }}>
             <Title level={2}>Car Route Details</Title>
 
-            <div style={{ marginBottom: '20px' }}>
-                <Text strong>Entry Time:</Text> {entryTime}
-            </div>
-            <div style={{ marginBottom: '20px' }}>
-                <Text strong>Exit Time:</Text> {exitTime}
-            </div>
-            <div style={{ marginBottom: '20px' }}>
-                <Text strong>Status:</Text>
-                {routeStatus && (
-                    <Tag color={routeStatus === "PENDING" ? "orange" : "green"} style={{ marginLeft: '8px' }}>
-                        {routeStatus}
-                    </Tag>
-                )}
-            </div>
+            {loadingRoute ? (
+                <p>Loading route details...</p>
+            ) : (
+                <>
+                    <Descriptions title="Car Details" bordered>
+                        <Item label="Model">{carData?.model || "N/A"}</Item>
+                        <Item label="Number Plate">{carData?.numberPlate || "N/A"}</Item>
+                        <Item label="Color">{carData?.color || "N/A"}</Item>
+                    </Descriptions>
 
-            {carData && (
-                <div style={{ marginBottom: '20px' }}>
-                    <Text strong>Car Details:</Text>
-                    <div><Text>Model: {carData.model}</Text></div>
-                    <div><Text>Number Plate: {carData.numberPlate}</Text></div>
-                    <div><Text>Color: {carData.color}</Text></div>
-                </div>
-            )}
+                    <Descriptions title="Route Details" bordered style={{ marginTop: '20px' }}>
+                        <Item label="Entry Time">{entryTime || "N/A"}</Item>
+                        <Item label="Exit Time">{exitTime || "N/A"}</Item>
+                        <Item label="Status">
+                            {routeStatus ? (
+                                <Tag color={routeStatus === "PENDING" ? "orange" : "green"}>
+                                    {routeStatus}
+                                </Tag>
+                            ) : (
+                                "N/A"
+                            )}
+                        </Item>
+                        {/* You can add other Route details here */}
+                    </Descriptions>
 
-            {source && destination && (
-                <div style={{ marginTop: '30px' }}>
-                    <Map source={source} destination={destination} />
-                </div>
+                    {waypoints.length > 1 ? ( // Show map only if there are at least 2 waypoints
+                        <div style={{ marginTop: '30px' }}>
+                            <Map waypoints={waypoints} />
+                        </div>
+                    ) : (
+                        <p>{routeData.length === 0 ? "No route data available." : "Not enough location data to display the route."}</p>
+                    )}
+                </>
             )}
         </div>
     );
