@@ -12,6 +12,7 @@ export default function Signup() {
     const [lname, setLname] = useState('');
     const [phone, setPhone] = useState('');
     const [country, setCountry] = useState('');
+    const [seatNumber, setSeatNumber] = useState('');
     const [showPassword, setShowPassword] = useState(false);
 
     const [errorEmail, setErrorEmail] = useState(false);
@@ -20,6 +21,7 @@ export default function Signup() {
     const [errorLname, setErrorLname] = useState(false);
     const [errorPhone, setErrorPhone] = useState(false);
     const [errorCountry, setErrorCountry] = useState(false);
+    const [errorSeatNumber, setErrorSeatNumber] = useState(false);
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
@@ -60,20 +62,23 @@ export default function Signup() {
             setErrorCountry(true);
         }
 
+        if (seatNumber === '') {
+            errors++;
+            setErrorSeatNumber(true);
+        }
+
         if (errors === 0) {
             const body = {
-                username: `${fname + lname}`,
-                password: pass,
                 email: email,
-                contact_number: phone,
-                // last_name: "string",
-                country: country
+                password: pass,
+                seatNumber: seatNumber,
+                userName: `${fname} ${lname}`,
             }
             console.log(body);
-            const link = '/api/signup'
+            const link = '/auth/signup'
             try {
                 const signup = await SIGNUP_POST_METHOD(link, JSON.stringify(body));
-                console.log(signup, 'signup');
+                console.log(signup, 'signup page');
                 if (signup.status === 201) {
                     toast.success("User Created Sucessfully");
                     setTimeout(() => {
@@ -151,6 +156,22 @@ export default function Signup() {
                                     placeholder="Enter your email"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
+                                    required
+                                />
+                            </div>
+
+                            <div className="mb-3">
+                                <label htmlFor="seatnumber" className="form-label">
+                                    Seat Number
+                                </label>
+                                <input
+                                    type="text"
+                                    id="seatnumber"
+                                    name="seatnumber"
+                                    className={errorSeatNumber ? 'form-control input-error' : "form-control"}
+                                    placeholder="Enter your Seat Number"
+                                    value={seatNumber}
+                                    onChange={(e) => setSeatNumber(e.target.value)}
                                     required
                                 />
                             </div>

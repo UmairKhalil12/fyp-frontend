@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from '../../../Components/Navbar/Navbar';
 import HomePageContent from '../HomePageContent/HomePageContent';
 import Footer from '../../../Components/Footer/Footer';
 import SideFilterBar from '../../../Components/SideFilterBar/SideFilterBar';
 import './HomePage.css';
+
+// /getRoutes
+// /camera/cameras
 
 export default function HomePage() {
     const [filters, setFilters] = useState({
@@ -11,11 +14,12 @@ export default function HomePage() {
         TimeStamp: '',
         Car: ''
     });
-    console.log(filters);
+    // console.log(filters);
 
     const handleFilterChange = (newFilters) => {
         setFilters(newFilters);
     };
+
     return (
         <div className="main-home-page">
             <Navbar />

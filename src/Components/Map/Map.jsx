@@ -2,13 +2,16 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { GoogleMap, LoadScript, DirectionsRenderer } from '@react-google-maps/api';
 
 const containerStyle = {
-    width: '35%',
+    width: '100%',
     height: '300px'
 };
 
 const center = { lat: 24.939047604647794, lng: 67.12364596507129 };
 
 export default function Map({ source, destination }) {
+    //silver jubilee 24.93113178494496, 67.1182679245936
+    //maskan gate 24.94982820228756, 67.1127637670557
+    // ubit 24.9456433105776, 67.11540781292426
     const [directions, setDirections] = useState(null);
     const [loading, setLoading] = useState(false);
 

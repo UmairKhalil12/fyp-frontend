@@ -1,0 +1,19 @@
+/* CarCard.css */
+
+.car-card {
+    width: 300px;
+    border: 1px solid #f0f0f0;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    /* Change cursor to pointer */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    /* Smooth transitions */
+}
+
+.car-card:hover {
+    transform: scale(1.05);
+    /* Scale up on hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    /* Increase shadow on hover */
+}

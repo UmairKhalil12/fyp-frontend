@@ -2,7 +2,7 @@ import axios from 'axios';
 // import { userLogin, userInfo } from '../store/userSlice';
 // import { toast } from 'react-toastify';
 
-const Url = 'http://localhost:8000'
+const Url = 'http://localhost:3001'
 
 export const LOGIN_POST_METHOD = async (link, body) => {
     var url = `${Url}${link}`
@@ -28,6 +28,7 @@ export const LOGIN_POST_METHOD = async (link, body) => {
 
 export const SIGNUP_POST_METHOD = async (link, body) => {
     var url = `${Url}${link}`
+    console.log(url, 'signup url');
     try {
         const res = await axios.post(url, body, {
             headers: {
@@ -47,52 +48,37 @@ export const SIGNUP_POST_METHOD = async (link, body) => {
 }
 
 
-export const GET_METHOD = async (link) => {
+export const GET_METHOD = async (link, authToken) => {
+    var url = `${Url}${link}`;
     try {
-        const res = await axios.get(`${Url} + ${link}`);
+        const res = await axios.get(url, {
+            headers: {
+                'Authorization': `Bearer ${authToken}`,
+                'Content-Type': 'application/json',
+            }
+        });
+        console.log(res, 'res get api');
         return res.data;
     } catch (error) {
         console.log("Error fetching:", error.message);
     }
 };
 
-export const POST_METHOD = async (link, body) => {
-    console.log(link, body);
+
+export const POST_METHOD = async (link, authToken, body) => {
+    var url = `${Url}${link}`;
     try {
-        const res = await axios.post(`${Url} + ${link}`, body, {
+        const res = await axios.post(`${url}`, body, {
             headers: {
-                'Content-Type': 'multipart/form-data'
-            }
+                'Authorization': `Bearer ${authToken}`,
+                'Content-Type': 'application/json'
+            },
+            data: body
         });
-        if (res.status >= 200 && res.status < 300) {
-            return { success: true, data: res.data };
-        } else {
-            return { success: false, message: `Unexpected response code: ${res.status}` };
-        }
+        return res.data;
     } catch (error) {
         console.log("Error posting:", error.message);
-        return { success: false, message: error.message };
     }
 };
 
-export const getRoute = async (startCoords, endCoords) => {
-    const apiKey = '5b3ce3597851110001cf62481be299697bd1443fb0b11a2cfa07234f';
-    const url = 'https://api.openrouteservice.org/v2/directions/driving-car';
 
-    const body = `{"coordinates":[${startCoords},${endCoords}]}`;
-
-    const headers = {
-        "Authorization": apiKey,
-        "Content-Type": "application/json"
-    };
-
-    try {
-        const response = await axios.post(url, body, {
-            headers: headers
-        });
-        return response.data.features[0].geometry.coordinates;
-    } catch (error) {
-        console.error('Error fetching route:', error);
-        return [];
-    }
-};

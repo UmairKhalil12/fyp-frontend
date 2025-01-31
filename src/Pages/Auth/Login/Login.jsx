@@ -11,9 +11,11 @@ import { toast } from 'react-toastify';
 export default function Login() {
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
+  const [seatNumber, setSeatNumber] = useState('');
 
   const [errorEmail, setErrorEmail] = useState(false);
   const [errorPass, setErrorPass] = useState(false);
+  const [errorSeatNumber, setErrorSeatNumber] = useState(false);
 
   const [showPassword, setShowPassword] = useState(false);
   const togglePasswordVisibility = () => {
@@ -26,20 +28,25 @@ export default function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     var errors = 0;
-    if (email === '') {
-      errors++;
-      setErrorEmail(true);
-    }
+    // if (email === '') {
+    //   errors++;
+    //   setErrorEmail(true);
+    // }
 
     if (pass === '') {
       errors++;
       setErrorPass(true);
     }
 
-    const link = `/api/login`;
+    if (seatNumber === '') {
+      errors++;
+      setErrorSeatNumber(true);
+    }
+
+    const link = `/auth/login`;
 
     const body = {
-      email: email,
+      seatNumber: seatNumber,
       password: pass
     }
     console.log(body, 'body');
@@ -47,12 +54,12 @@ export default function Login() {
     if (errors === 0) {
       try {
         const login = await LOGIN_POST_METHOD(link, JSON.stringify(body), dispatch);
-        console.log(login, 'login');
+        console.log(login, 'login page');
 
-        if (login.status > 200) {
+        if (login.status > 201) {
           toast.error(`${login.data.detail}`);
         }
-        else if (login.status === 200) {
+        else if (login.status === 200 || login.status === 201) {
           toast.success("Logged in successfully");
           dispatch(userLogin(true));
           dispatch(userInfo(login.data))
@@ -90,6 +97,21 @@ export default function Login() {
                   onChange={(e) => setEmail(e.target.value)}
                   className={errorEmail ? 'form-control input-error' : "form-control"}
                   placeholder="Enter your email"
+                />
+              </div>
+
+              <div className="mb-3">
+                <label htmlFor="email" className="form-label">
+                  Seat Number
+                </label>
+                <input
+                  type="seatnumber"
+                  id="seatnumber"
+                  name="seatnumber"
+                  value={seatNumber}
+                  onChange={(e) => setSeatNumber(e.target.value)}
+                  className={errorSeatNumber ? 'form-control input-error' : "form-control"}
+                  placeholder="Enter your seat number"
                   required
                 />
               </div>

@@ -1,9 +1,25 @@
 .main-home-page-content {
-    padding: 1rem;
+    padding: 2rem;
 }
 
 .home-page-content {
-    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.car-card-div {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    /* Automatically fill the row with cards */
+    gap: 20px;
+    /* Space between cards */
+    justify-items: center;
+    /* Center each card in its grid cell */
+    width: 100%;
+    max-width: 1200px;
+    /* You can adjust the max-width based on your needs */
 }
 
 @media (max-width: 768px) {
@@ -13,6 +29,11 @@
 
     .home-page-content {
         display: flex;
-        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .car-card-div {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     }
 }
