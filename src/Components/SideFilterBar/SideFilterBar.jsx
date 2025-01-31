@@ -30,10 +30,14 @@ export default function SideFilterBar({ onFilterChange, setFilters }) {
   };
 
   const handleResetFilters = () => {
+    const resetValues = { timeStamp: null, model: null, numberPlate: null, color: null };
+
     setColor(null);
     setTimeStamp(null);
     setModel(null);
     setNumberPlate(null);
+
+    onFilterChange(resetValues);
   };
 
   const filterContent = (

@@ -6,19 +6,19 @@
 
 .filter-bar-content-div {
     display: flex;
-    justify-content: space-between;
+    gap: 20px;
+    /* Adds consistent spacing between SideFilterBar and HomePageContent */
     position: relative;
     padding-top: 1rem;
     padding-left: 3rem;
     padding-right: 3rem;
-
 }
-
 
 @media (max-width: 768px) {
     .filter-bar-content-div {
         flex-direction: column;
-        height: 100vh;
+        height: auto;
+        /* Adjust height to fit content */
         padding: 0rem;
     }
 }

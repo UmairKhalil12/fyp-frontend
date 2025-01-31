@@ -36,7 +36,7 @@ export default function Navbar() {
       </div>
 
       {/* Desktop Menu */}
-      <Menu mode="horizontal" className="nav-menu">
+      <Menu mode="horizontal" className="nav-menu" selectedKeys={[]}>
         <Menu.Item key="home" icon={<HomeOutlined />} className="nav-link">
           <Link to="/">Home</Link>
         </Menu.Item>
@@ -57,7 +57,7 @@ export default function Navbar() {
 
       {/* Mobile Hamburger Icon */}
       <div className="mobile-menu-icon" onClick={toggleDrawer}>
-        <MenuOutlined style={{ fontSize: '24px', color: '#4a4a4a' }} />
+        <MenuOutlined style={{ fontSize: '24px', color: '#4a4a4a', marginRight: '1rem' }} />
       </div>
 
       {/* Mobile Drawer */}

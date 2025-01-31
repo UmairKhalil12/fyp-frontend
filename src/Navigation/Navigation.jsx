@@ -5,6 +5,7 @@ import HomePage from "../Pages/Home/HomePage/HomePage";
 import { useSelector } from "react-redux";
 import UploadVideoPage from "../Pages/Features/UploadVideoPage/UploadVideoPage";
 import SingleCarPage from "../Pages/SingleCarPage/SingleCarPage";
+import About from "../Pages/About/About";
 // import SingleCarPage from "../Pages/SingleCarPage/SingleCarPage";
 
 export default function Navigation() {
@@ -16,6 +17,7 @@ export default function Navigation() {
                 <Route path='/home' element={user ? <HomePage /> : <Navigate to="/login" />} />
                 <Route path='/upload' element={user ? <UploadVideoPage /> : <Navigate to='/login' />} />
                 <Route path='/' element={user ? <HomePage /> : <Navigate to="/login" />} />
+                <Route path='/about' element={user ? <About /> : <Navigate to='/login' />} />
                 <Route path='/car/:routeId' element={user ? <SingleCarPage /> : <Navigate to="/login" />} />
                 <Route
                     path="/login"

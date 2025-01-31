@@ -39,6 +39,7 @@ export default function UploadVideo() {
     toast.success("detecting...");
   };
 
+
   const handleUpload = async () => {
     if (!selectedFile) return;
 

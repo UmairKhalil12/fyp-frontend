@@ -1,250 +1,161 @@
 import React, { useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './Signup.css';
+import { Form, Input, Button, Typography, message, Row, Col } from 'antd';
+import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import { SIGNUP_POST_METHOD } from '../../../api/api';
+import './Signup.css'; // Custom CSS for additional styling
+
+const { Title } = Typography;
 
 export default function Signup() {
-    const [email, setEmail] = useState('');
-    const [pass, setPass] = useState('');
-    const [fname, setFname] = useState('');
-    const [lname, setLname] = useState('');
-    const [phone, setPhone] = useState('');
-    const [country, setCountry] = useState('');
-    const [seatNumber, setSeatNumber] = useState('');
+    const [form] = Form.useForm();
+    const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
-
-    const [errorEmail, setErrorEmail] = useState(false);
-    const [errorPass, setErrorPass] = useState(false);
-    const [errorFname, setErrorFname] = useState(false);
-    const [errorLname, setErrorLname] = useState(false);
-    const [errorPhone, setErrorPhone] = useState(false);
-    const [errorCountry, setErrorCountry] = useState(false);
-    const [errorSeatNumber, setErrorSeatNumber] = useState(false);
+    const navigate = useNavigate();
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
 
-    const navigate = useNavigate();
+    const handleSignup = async (values) => {
+        setLoading(true);
+        const { email, password, firstName, lastName, phone, country, seatNumber } = values;
 
-    const handleSignup = async (e) => {
-        e.preventDefault();
-        var errors = 0;
-        if (email === '') {
-            errors++;
-            setErrorEmail(true);
-        }
+        const body = {
+            email,
+            password,
+            seatNumber,
+            userName: `${firstName} ${lastName}`,
+        };
 
-        if (pass === '') {
-            errors++;
-            setErrorPass(true);
-        }
+        const link = '/auth/signup';
 
-        if (fname === '') {
-            errors++;
-            setErrorFname(true);
-        }
-
-        if (lname === '') {
-            errors++;
-            setErrorLname(true);
-        }
-
-        if (phone === '') {
-            errors++;
-            setErrorPhone(true);
-        }
-
-        if (country === '') {
-            errors++;
-            setErrorCountry(true);
-        }
-
-        if (seatNumber === '') {
-            errors++;
-            setErrorSeatNumber(true);
-        }
-
-        if (errors === 0) {
-            const body = {
-                email: email,
-                password: pass,
-                seatNumber: seatNumber,
-                userName: `${fname} ${lname}`,
-            }
-            console.log(body);
-            const link = '/auth/signup'
-            try {
-                const signup = await SIGNUP_POST_METHOD(link, JSON.stringify(body));
-                console.log(signup, 'signup page');
-                if (signup.status === 201) {
-                    toast.success("User Created Sucessfully");
-                    setTimeout(() => {
-                        navigate('/login');
-                    }, 3000)
-
-                }
-                else if (signup.status > 200) {
-                    toast.error(`${signup.data.detail}`);
-                }
-                else if (signup.status === 200) {
-                    toast.success("signup successfull");
+        try {
+            const signup = await SIGNUP_POST_METHOD(link, JSON.stringify(body));
+            if (signup.status === 201) {
+                message.success('User created successfully');
+                setTimeout(() => {
                     navigate('/login');
-                }
+                }, 3000);
+            } else if (signup.status > 200) {
+                message.error(signup.data.detail || 'Signup failed');
+            } else if (signup.status === 200 || signup.sucess === 201) {
+                message.success('Signup successful');
+                navigate('/login');
             }
-
-            catch (error) {
-                console.error("signup error:", error);
-                toast.error("An unexpected error occurred");
-            }
-
+        } catch (error) {
+            console.error('Signup error:', error);
+            message.error('An unexpected error occurred');
+        } finally {
+            setLoading(false);
         }
-    }
+    };
 
     return (
-        <div className="container-fluid p-0">
-            <div className="row g-0 login-container">
-                <div className="col-md-6 signup-image"></div>
+        <div className="signup-container">
+            <div className="signup-image" />
+            <div className="signup-form-container">
+                <div className="signup-form-inner">
+                    <Title level={2} className="signup-form-heading">
+                        Signup
+                    </Title>
+                    <Form form={form} onFinish={handleSignup} layout="vertical">
+                        <Row gutter={16}>
+                            <Col span={12}>
+                                <Form.Item
+                                    name="firstName"
+                                    label="First Name"
+                                    rules={[{ required: true, message: 'Please enter your first name' }]}
+                                >
+                                    <Input placeholder="Enter your first name" />
+                                </Form.Item>
+                            </Col>
+                            <Col span={12}>
+                                <Form.Item
+                                    name="lastName"
+                                    label="Last Name"
+                                    rules={[{ required: true, message: 'Please enter your last name' }]}
+                                >
+                                    <Input placeholder="Enter your last name" />
+                                </Form.Item>
+                            </Col>
+                        </Row>
 
-                <div className="col-md-6 login-form-container">
-                    <div className="login-form-inner">
-                        <h3 className="login-form-heading">Signup</h3>
-                        <form>
-                            <div className="mb-3">
-                                <label htmlFor="fname" className="form-label">
-                                    First Name
-                                </label>
-                                <input
-                                    type="text"
-                                    id="fname"
-                                    name="fname"
-                                    className={errorFname ? 'form-control input-error' : "form-control"}
-                                    placeholder="Enter your First Name"
-                                    value={fname}
-                                    onChange={(e) => setFname(e.target.value)}
-                                    required
-                                />
-                            </div>
 
-                            <div className="mb-3">
-                                <label htmlFor="lname" className="form-label">
-                                    Last Name
-                                </label>
-                                <input
-                                    type="text"
-                                    id="lname"
-                                    name="lname"
-                                    className={errorLname ? 'form-control input-error' : "form-control"}
-                                    placeholder="Enter your Last Name"
-                                    value={lname}
-                                    onChange={(e) => setLname(e.target.value)}
-                                    required
-                                />
-                            </div>
+                        <Form.Item
+                            name="email"
+                            label="Email Address"
+                            rules={[
+                                { required: true, message: 'Please enter your email' },
+                                { type: 'email', message: 'Please enter a valid email' },
+                            ]}
+                        >
+                            <Input placeholder="Enter your email" />
+                        </Form.Item>
 
-                            <div className="mb-3">
-                                <label htmlFor="email" className="form-label">
-                                    Email Address
-                                </label>
-                                <input
-                                    type="email"
-                                    id="email"
-                                    name="email"
-                                    className={errorEmail ? 'form-control input-error' : "form-control"}
-                                    placeholder="Enter your email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    required
-                                />
-                            </div>
+                        <Form.Item
+                            name="seatNumber"
+                            label="Seat Number"
+                            rules={[{ required: true, message: 'Please enter your seat number' }]}
+                        >
+                            <Input placeholder="Enter your seat number" />
+                        </Form.Item>
 
-                            <div className="mb-3">
-                                <label htmlFor="seatnumber" className="form-label">
-                                    Seat Number
-                                </label>
-                                <input
-                                    type="text"
-                                    id="seatnumber"
-                                    name="seatnumber"
-                                    className={errorSeatNumber ? 'form-control input-error' : "form-control"}
-                                    placeholder="Enter your Seat Number"
-                                    value={seatNumber}
-                                    onChange={(e) => setSeatNumber(e.target.value)}
-                                    required
-                                />
-                            </div>
 
-                            <div className="mb-3">
-                                <label htmlFor="phone" className="form-label">
-                                    Phone
-                                </label>
-                                <input
-                                    type="tel"
-                                    id="phone"
+
+                        <Row gutter={16}>
+                            <Col span={12}>
+                                <Form.Item
                                     name="phone"
-                                    className={errorPhone ? 'form-control input-error' : "form-control"}
-                                    placeholder="Enter your phone"
-                                    value={phone}
-                                    onChange={(e) => setPhone(e.target.value)}
-                                    required
-                                />
-                            </div>
-
-                            <div className="mb-3">
-                                <label htmlFor="country" className="form-label">
-                                    Country
-                                </label>
-                                <input
-                                    type="text"
-                                    id="country"
+                                    label="Phone"
+                                    rules={[{ required: true, message: 'Please enter your phone number' }]}
+                                >
+                                    <Input placeholder="Enter your phone number" />
+                                </Form.Item>
+                            </Col>
+                            <Col span={12}>
+                                <Form.Item
                                     name="country"
-                                    className={errorCountry ? 'form-control input-error' : "form-control"}
-                                    placeholder="Enter your phone"
-                                    value={country}
-                                    onChange={(e) => setCountry(e.target.value)}
-                                    required
-                                />
-                            </div>
+                                    label="Country"
+                                    rules={[{ required: true, message: 'Please enter your country' }]}
+                                >
+                                    <Input placeholder="Enter your country" />
+                                </Form.Item>
+                            </Col>
+                        </Row>
 
+                        <Form.Item
+                            name="password"
+                            label="Password"
+                            rules={[{ required: true, message: 'Please enter your password' }]}
+                        >
+                            <Input.Password
+                                placeholder="Enter your password"
+                                iconRender={(visible) =>
+                                    visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+                                }
+                            />
+                        </Form.Item>
 
-                            <div className="mb-3 password-container">
-                                <label htmlFor="password" className="form-label">
-                                    Password
-                                </label>
-                                <div className="input-group">
-                                    <input
-                                        type={showPassword ? 'text' : 'password'}
-                                        id="password"
-                                        name="password"
-                                        className={errorPass ? 'form-control input-error' : "form-control"}
-                                        placeholder="Enter your password"
-                                        value={pass}
-                                        onChange={(e) => setPass(e.target.value)}
-                                        required
-                                    />
-                                    <button
-                                        type="button"
-                                        className="btn btn-outline-secondary toggle-password"
-                                        onClick={togglePasswordVisibility}
-                                    >
-                                        {showPassword ? 'Hide' : 'Show'}
-                                    </button>
-                                </div>
-                            </div>
+                        <Form.Item>
+                            <Button
+                                type="primary"
+                                htmlType="submit"
+                                block
+                                loading={loading}
+                                className="signup-form-button"
+                            >
+                                Signup
+                            </Button>
+                        </Form.Item>
 
-
-                            <div className="btn-login">
-                                <button type="submit" className="btn btn-primary btn-login" onClick={handleSignup}>
-                                    Signup
-                                </button>
-                            </div>
-                            <p className="signup-para-login">
-                                Already have an account? <span className="signup-link" onClick={() => navigate('/login')}>Login</span>
-                            </p>
-                        </form>
-                    </div>
+                        <div className="signup-para-login">
+                            Already have an account?{' '}
+                            <span className="signup-link" onClick={() => navigate('/login')}>
+                                Login
+                            </span>
+                        </div>
+                    </Form>
                 </div>
             </div>
         </div>
