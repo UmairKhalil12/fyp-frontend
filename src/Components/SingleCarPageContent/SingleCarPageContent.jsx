@@ -3,6 +3,7 @@ import { Typography, Tag, Descriptions } from 'antd';
 import { POST_METHOD } from '../../api/api';
 import { useSelector } from 'react-redux';
 import Map from "../Map/Map"; // Make sure the path is correct
+import { getFormattedString } from '../../utils/helper';
 
 const { Title } = Typography;
 const { Item } = Descriptions;
@@ -62,7 +63,7 @@ export default function SingleCarPageContent({ routeId }) {
                         <Item label="Status">
                             {routeStatus ? (
                                 <Tag color={routeStatus === "PENDING" ? "orange" : "green"}>
-                                    {routeStatus}
+                                    {getFormattedString(routeStatus)}
                                 </Tag>
                             ) : (
                                 "N/A"

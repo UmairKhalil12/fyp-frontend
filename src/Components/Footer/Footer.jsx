@@ -39,7 +39,7 @@ export default function AppFooter() {
                         <List>
                             <List.Item>
                                 <CarOutlined style={{ marginRight: 8, color: '#1890ff' }} />
-                                <Text>YOLOv8 (Python) for real-time vehicle detection</Text>
+                                <Text>YOLOv10 (Python) for real-time vehicle detection</Text>
                             </List.Item>
                             <List.Item>
                                 <ApiOutlined style={{ marginRight: 8, color: '#52c41a' }} />
@@ -47,7 +47,7 @@ export default function AppFooter() {
                             </List.Item>
                             <List.Item>
                                 <DatabaseOutlined style={{ marginRight: 8, color: '#faad14' }} />
-                                <Text>SQL for robust and structured data management</Text>
+                                <Text>PostgreSQL for robust and structured data management</Text>
                             </List.Item>
                             <List.Item>
                                 <CodeOutlined style={{ marginRight: 8, color: '#722ed1' }} />

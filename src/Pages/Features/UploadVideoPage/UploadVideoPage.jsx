@@ -9,7 +9,7 @@ export default function UploadVideoPage() {
         <div className='main-upload-page'>
             <Navbar />
             <UploadVideo />
-            <Footer />
+            {/* <Footer /> */}
         </div>
     );
 }

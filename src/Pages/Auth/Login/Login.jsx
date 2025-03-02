@@ -85,7 +85,7 @@ export default function Login() {
             <div className="signup-para-login">
               Don't have an account?{' '}
               <span className="signup-link" onClick={() => navigate('/signup')}>
-                Signup
+               <b>Signup</b> 
               </span>
             </div>
           </Form>

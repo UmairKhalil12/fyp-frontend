@@ -152,7 +152,7 @@ export default function Signup() {
                         <div className="signup-para-login">
                             Already have an account?{' '}
                             <span className="signup-link" onClick={() => navigate('/login')}>
-                                Login
+                               <b>Login</b> 
                             </span>
                         </div>
                     </Form>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Drawer, Button, Input, Collapse, Typography } from 'antd';
+import { Drawer, Button, Input, Collapse, Typography, DatePicker } from 'antd';
 import { FilterOutlined, CloseOutlined } from '@ant-design/icons';
 import './SideFilterBar.css'; // Optional for additional custom styles
 
@@ -40,15 +40,27 @@ export default function SideFilterBar({ onFilterChange, setFilters }) {
     onFilterChange(resetValues);
   };
 
+  const handleDateChange = (date, dateString) => {
+    // `date` is a moment object, `dateString` is the formatted string
+    setTimeStamp(date);
+  };
+
   const filterContent = (
     <>
       <Collapse defaultActiveKey={['timestamp', 'color', 'model', 'numberplate']} ghost>
         <Panel header="Time Stamp" key="timestamp">
-          <Input
+          {/* <Input
             className='input-side-bar'
-            type="datetime-local"
+            type="date"
             value={timeStamp}
             onChange={(e) => setTimeStamp(e.target.value)}
+            style={{ width: '100%', minWidth: '200px' }}
+          /> */}
+          <DatePicker
+            className='input-side-bar'
+            format="DD/MM/YY" // Set the display format to dd/mm/yy
+            value={timeStamp} // Use the moment object for the value
+            onChange={handleDateChange}
             style={{ width: '100%', minWidth: '200px' }}
           />
         </Panel>
