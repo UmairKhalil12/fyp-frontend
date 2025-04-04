@@ -20,6 +20,7 @@ export default function Signup() {
     const handleSignup = async (values) => {
         setLoading(true);
         const { email, password, firstName, lastName, phone, country, seatNumber } = values;
+        console.log("nsakdbabdsbajkdbjka")
 
         const body = {
             email,
